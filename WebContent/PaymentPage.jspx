@@ -366,113 +366,12 @@
 			</div>
 			<ul class="nav-container">
 				<a href="https://thebookstore.mybluemix.net/Bookstore/Cart" name="cart" value="true"><li>Cart</li></a>
-			</ul>
-			
-			<!--
-			<ul class="search-container">
-				<a><li><INPUT type="text" id="search" name="search" placeholder="Search..."/></li></a>
-				<a><li><button type="button">Search</button></li></a>
-			</ul>
-			//-->			
+			</ul>			
 		</div>
 	</div>
-			
-	<c:choose>
-		<c:when test="${isNotLoggedIn}">
-			<div class="payment-login-or-create">
-			<p>Please Login or Create a new Account to proceed!</p><br/><br/>
-			<div class="loginButton">
-					<form action="" method="POST">
-						<button action="submit" name="payment-login" id="payment-login" value="true">Login</button><br/><br/>
-					</form>
-			</div>
-			<div class="createButton">
-				<form action="" method="POST">
-					<button action="submit" name="payment-register" id="payment-register" value="true">Create Account</button><br/><br/>
-				</form>
-			</div>
-		</div>
-		</c:when>
-		<c:when test="${isPaymentLogin}">
-			<div class="payment-login">
-				<form action="" method="POST" onsubmit="return validateLogin();">
-				<fieldset>
-				<legend>Login</legend><br/>
-					<div class="paymentLogin">
-						<label for="paymentUsername">Username:</label><br/>
-						<input type="text" name="paymentUsername" id="paymentUsername"></input><br/><br/>
-						<label for="paymentPassword">Password:</label><br/>
-						<input type="password" name="loginPassword" id="loginPassword"></input><br/>
-						<input  type="checkbox" onclick="showPassword()"></input>
-						<label style="vertical-align: 40%; margin-left: 5px;">Show Password</label><br/><br/>
-						<button action="submit" name="payment-login" id="payment-login">Login</button><br/>
-					</div>
-				</fieldset>
-				</form>
-			</div>
-		</c:when>
-		<c:when test="${isPaymentRegister}">
-			<div>
-			<form class="payment-register" method="POST" onsubmit="return validateRegistration();">
-				<fieldset>
-				<legend>Create Account</legend><br/>
-					<label for="username">Username<small>*</small></label><br/>
-					<input type="text" name="registerUsername" id="registerUsername"></input><br/><br/>
-					<label for="username">Password<small>*</small></label><br/>
-					<input type="password" name="registerPassword" id="registerPassword"></input><br/><br/>
-					<p style="font-weight: bold; margin-left: 10px;">Billing and Shipping Information:</p><br/>
-					<p class="fName">
-						<label for="firstname">First Name<small>*</small></label><br/>
-						<input type="text" name="registerFirstName" id="registerFirstName"></input>
-					</p>
-					<p class="lName">
-						<label for="lastname">Last Name<small>*</small></label><br/>
-						<input type="text" name="registerLastName" id="registerLastName"></input>
-					</p>
-					<p class="address">
-						<label for="streetNumber">Address (Street Number)<small>*</small></label><br/>
-						<input type="text" name="registerStreet" id="registerStreet"></input><br/><br/>
-						<label for="username">Address Line 2</label><br/>
-						<input type="text" name="registerAddress2" id="registerAddress2"></input>
-					</p>
-					<p class="city"><br/>
-						<label for="username">City<small>*</small></label><br/>
-						<input type="text" name="registerCity" id="registerCity"></input>
-					</p>
-					<p class="province">
-						<label for="username">Province<small>*</small></label><br/>
-						<input type="text" name="registerProvince" id="registerProvince"></input>
-					</p>
-					<p class="postalCode">
-						<label for="username">Postal Code<small>*</small></label><br/>
-						<input type="text" name="registerPostalCode" id="registerPostalCode" placeholder="XXX XXX"></input>
-					</p>
-					<p class="country"><br/>
-						<label for="country">Country<small>*</small></label>
-						<select name="registerCountry" id="registerCountry">
-							<option selected="selected">Select Country</option>
-							<option>Canada</option>
-							<option>USA</option>
-							<option>Mexico</option>
-							<option>India</option>
-							<option>China</option>
-							<option>Germany</option>
-							<option>France</option>
-						</select>
-					</p>
-					<p class="phone"><br/>
-						<label for="phone">Phone Number</label><br/>
-						<input type="text" name="registerPhone" id="registerPhone"></input>
-					</p>
-					<button action="submit" name="createAccountButton" id="createAccountButton" value="true" class="createAccountButton">Create Account</button><br/>
-				</fieldset>
-			</form>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<div class="creditCard">
+	<div class="creditCard">
 			<p style="font-weight: bold; font-size: 120%;">Credit Card Information:</p><br/>
-			<form method="POST" onsubmit="return validateCC();">
+			<form action="ConfirmOrder.jspx" method="POST" onsubmit="return validateCC();">
 				<label for="nameOnCard">Name on Card<small>*</small></label><br/>
 				<input type="text" name="nameOnCard" id="nameOnCard" placeholder="Name on Card"></input><br/><br/>
 				<label for="cardNumber">Card Number<small>*</small></label><br/>
@@ -508,11 +407,7 @@
 					<input style="width: 65px; height: 25px; margin-left: 65px;" type="text" placeholder="XXXX" id="cvv"></input><br/><br/>
 					<button action="submit" style="width: 200px;" name="paymentButton" id="paymentButton">Continue to proceed</button>
 				</form>
-			</div>		
-		</c:otherwise>
-	</c:choose>	
-	
-	${test}
+			</div>	
 </body>
 </html>
 </jsp:root>
