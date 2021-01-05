@@ -1,0 +1,35 @@
+INSERT INTO Book (bid, title, price, category) 
+VALUES 
+('b001', 'Little Prince', 20, 'Fiction'),
+('b002','Physics', 201, 'Science'),
+('b003','Mechanics' ,100,'Engineering');
+
+INSERT INTO Address (street, province, country, zip, phone) 
+VALUES 
+('123 Yonge St', 'ON', 'Canada', 'K1E 6T5' ,'647-123-4567'),
+('445 Avenue rd', 'ON', 'Canada', 'M1C 6K5' ,'416-123-8569'),
+('789 Keele St.', 'ON', 'Canada', 'K3C 9T5' ,'416-123-9568');
+
+INSERT INTO PO (lname, fname, status, address) 
+VALUES 
+('John', 'White', 'PROCESSED', 1),
+('Peter', 'Black', 'DENIED', 2),
+('Andy', 'Green', 'ORDERED', 3);
+
+INSERT INTO POItem (id, bid, price, quantity) 
+VALUES 
+(1, 'b001', 20, 1),
+(2, 'b002', 201, 2),
+(3, 'b003', 100, 3);
+
+INSERT INTO VisitEvent (day, bid, eventtype) 
+VALUES 
+('12202015', 'b001', 'VIEW'),
+('12242015', 'b001', 'CART'),
+('12252015', 'b001', 'PURCHASE');
+
+INSERT INTO BOOKEXTRA (description, bid)
+VALUES
+('Description  for book id b001', 'b001'),
+('Description for book id b002', 'b002'),
+('Description for book id b003', 'b003');
