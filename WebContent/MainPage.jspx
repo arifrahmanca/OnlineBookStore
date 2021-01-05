@@ -26,13 +26,7 @@
 			</ul>
 			<ul class="nav-container">
 				${logout}
-			</ul>
-			<!--
-			<ul class="search-container">
-				<a><li><INPUT type="text" id="search" name="search" placeholder="Search..."/></li></a>
-				<a><li><button type="button">Search</button></li></a>
-			</ul>
-			//-->			
+			</ul>			
 		</div>
 	</div>
 	
