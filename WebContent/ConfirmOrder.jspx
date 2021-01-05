@@ -95,7 +95,7 @@
 		<hr></hr><br/>
 		<p style="font-weight: bold;">Total: <span style="display: inline; margin-left: 150px;"><f:formatNumber type="currency" >${totalPrice}</f:formatNumber></span></p><br/>
 		<hr></hr><br/>
-		<FORM action="checkout" method="POST" class="CHECKOUT">
+		<FORM action="PaymentSuccessful.jspx" method="POST" class="CHECKOUT">
 			<button action="submit" name="CHECKOUT" class="CHECKOUT" id="CHECKOUT" value="true">Confirm Order</button>
 		</FORM>
 	</div>
