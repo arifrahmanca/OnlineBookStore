@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+		xmlns:c="http://java.sun.com/jsp/jstl/core" 
+		xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
 	<jsp:directive.page contentType="text/html; charset=ISO-8859-1" 
 		pageEncoding="ISO-8859-1" session="true"/>
 	<jsp:output doctype-root-element="html"
@@ -105,11 +107,6 @@
 			<button action="submit" name="cartButton" class="cartButton" id="cartButton" value="true">Proceed to Checkout</button>
 		</FORM>
 	</div>
-	
-	<!-- 
-		need to make the order summary a form 
-	 -->
-
 </body>
 </html>
 </jsp:root>
