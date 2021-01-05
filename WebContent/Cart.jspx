@@ -101,7 +101,7 @@
 		<hr></hr><br/>
 		<p style="font-weight: bold;">Total: <span style="display: inline; margin-left: 150px;"><f:formatNumber type="currency" >${totalPrice}</f:formatNumber></span></p><br/>
 		<hr></hr><br/>
-		<FORM action="Bookstore" method="POST" class="cartButton">
+		<FORM action="Redirect.jspx" method="POST" class="cartButton">
 			<button action="submit" name="cartButton" class="cartButton" id="cartButton" value="true">Proceed to Checkout</button>
 		</FORM>
 	</div>
