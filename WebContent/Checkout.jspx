@@ -154,7 +154,7 @@
 	<div class="shippingDetails">
 		<p>SHIPPING OPTIONS</p><br/>
 		<p style="font-weight: bold;">Shipping Address:</p><br/>
-		<form method="POST" class="shippingForm">
+		<form action="PaymentPage.jspx" method="POST" class="shippingForm">
 			<p class="fName">
 				<label for="firstname">First Name<small>*</small></label><br/>
 				<input type="text" name="shippingFirstName" id="shippingFirstName" value="${firstName}"></input><br/>
