@@ -12,9 +12,23 @@
 	<LINK rel="StyleSheet" href="${pageContext.request.contextPath}/res/style.css" type="text/css" title="cse4413" media="screen,print"/>
 	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/res/mc.js">;</script>
-	<title>Confirm Order</title>
+	<script type="text/javascript">
+		function hideBillingInfo() {
+	 		var billing = document.getElementById('billing');
+	 		if (billing.style.display === "none") {
+	 			billing.style.display = "block";
+	 		  } else {
+	 			 billing.style.display = "none";
+	 		  }
+		}
+		
+		function clearText() {
+			var comment = document.getElementById('shippingComment');
+			comment.value= "";
+		}
+	</script>
+	<title>Checkout</title>
 	<style>
-	
 		.shippingDetails {
 			margin-left: 100px;
 			margin-top: 50px;
@@ -33,21 +47,96 @@
 			padding: 20px;
 		}
 		
-		
-		.shipping {
-			float: left;
+		.fName, .lName {
+			display: inline-block;
 		}
 		
-		.billing {
-			float: right;
-			margin-right: 180px;
+		.lName {
+			margin-left: 80px;
 		}
 		
-		.CHECKOUT {
+		.fName input, .lName input {
+			width: 300px;
+		}
+		
+		.address {
+			margin-top: 20px;
+		}
+		
+		.address input {
+			width: 690px;
+		}
+		
+		.shippingForm input {
+			height: 30px;
+			margin-top: 10px;
+		}
+		
+		select {
+			width: 228px;
+			height: 35px;
+			margin-right: 20px;
+			margin-top: 10px;
+		}
+		
+		.city, .province, .postalCode {
+			display: inline-block;
+		}	
+		
+		.city {
+			width: 150px;
+		}
+		
+		.province {
+			margin-left: 130px;
+		}
+		
+		.province input, .city input,
+		.phone input {
+			width: 220px;
+		}
+		
+		.postalCode {
+			margin-left: 50px;
+		}
+		
+		.postalCode input {
+			width: 130px;
+		}
+		
+		.country, .phone {
+			display: inline-block;
+		}
+		
+		.phone {
+			margin-left: 30px;
+		}
+		
+		.address, .city, .country,
+		.province, .postalCode, .phone {
+			margin-top: -5px;
+		}
+		
+		.hide {
+			margin-left: 10px;
+			vertical-align: 45%;			
+		}
+		
+		textarea {
+			text-decoration: blink;
+		}
+		
+		.cartButton {
 			margin-left: 35px;
 			height: 35px;
 			width: 150px;
-		}		
+		}
+		
+		.proceedToPayment {
+			height: 35px;
+			width: 250px;
+		}
+		
 	</style>
 </head>
 <body>
@@ -60,32 +149,107 @@
 				<a href=""><li>Cart</li></a>
 			</ul>		
 		</div>
-	</div>
-
+	</div>	
+	
 	<div class="shippingDetails">
-		<p style="font-weight: bold;">SHIPPING OPTIONS</p><br/>
-		<div class="shipping">
-			<p style="font-weight: bold;">Shipping Address:</p><br/>
-			<p>First Name: ${firstName}</p>
-			<p>Last Name: ${lastName}</p>
-			<p>Street Number: ${address1}</p>
-			<p>City: ${city}</p>                  
-			<p>Province: ${province}</p>
-			<p>Postal Code: ${postal}</p>                 
-			<p>Country: ${country}</p>
-			<p>Phone: ${number}</p>			
-		</div>
-		<div class="billing">
-			<p style="font-weight: bold;">Billing Information:</p><br/>
-			<p>First Name: ${fName} </p>
-			<p>Last Name: ${lName} </p>
-			<p>Street Number: ${address} </p>
-			<p>City: ${city1}  </p>  
-			<p>Province: ${province1} </p>
-			<p>Postal Code: ${postalCode1}</p>    
-			<p>Country: ${country1} </p>
-			<p>Phone: ${phone1}</p>
-		</div>
+		<p>SHIPPING OPTIONS</p><br/>
+		<p style="font-weight: bold;">Shipping Address:</p><br/>
+		<form action="PaymentPage.jspx" method="POST" class="shippingForm">
+			<p class="fName">
+				<label for="firstname">First Name<small>*</small></label><br/>
+				<input type="text" name="shippingFirstName" id="shippingFirstName" value="${firstName}"></input><br/>
+			</p>
+			<p class="lName">
+				<label for="lastname">Last Name<small>*</small></label><br/>
+				<input type="text" name="shippingLastName" id="shippingLastName" value="${lastName}"></input><br/>
+			</p>
+			<p class="address"><br/>
+				<label for="username">Address (Street Number)<small>*</small></label><br/>
+				<input type="text" name="shippingAddress" id="shippingAddress" value="${address1}"></input><br/><br/>
+				<label for="username">Address Line 2</label><br/>
+				<input type="text" name="shippingAddress2" id="shippingAddress2" value="${address2}"></input><br/>
+			</p>
+			<p class="city"> <br/>
+				<label for="username">City<small>*</small></label><br/>
+				<input type="text" name="shippingCity" id="shippingCity" value="${city}"></input><br/>
+			</p>
+			<p class="province">
+				<label for="username">Province<small>*</small></label><br/>
+				<input type="text" name="shippingProvince" id="shippingProvince" value="${province}"></input><br/>
+			</p>
+			<p class="postalCode">
+				<label for="username">Postal Code<small>*</small></label><br/>
+				<input type="text" name="shippingPostalCode" id="shippingPostalCode" placeholder="XXX XXX" value="${postal}"></input><br/>
+			</p>
+			<p class="country"><br/>
+				<label for="country">Country<small>*</small></label><br/>
+				<select name="shippingCountry">
+					<option>Canada</option>
+					<option>USA</option>
+					<option>Mexico</option>
+					<option>India</option>
+					<option>China</option>
+					<option>Germany</option>
+					<option>France</option>
+				</select>
+			</p>
+			<p class="phone">
+				<label for="username">Phone Number</label><br/>
+				<input type="text" name="shippingPhone" id="shippingPhone" value="${number}"></input><br/>
+			</p>
+			<p style="font-weight: bold;"><br/>Billing Information:</p>
+			<input type="checkbox" name="hideBilling" id="hideBilling" onclick="hideBillingInfo()" value="true"><span class="hide">Same as Shipping Address</span></input><br/>
+			<div id="billing">
+			<p class="fName"><br/>
+				<label for="firstname">First Name<small>*</small></label><br/>
+				<input type="text" name="billingFirstname" id="billingFirstname" value="${firstName}"></input><br/>
+			</p>
+			<p class="lName">
+				<label for="lastname">Last Name<small>*</small></label><br/>
+				<input type="text" name="billingLastname" id="billingLastname" value="${lastName}"></input><br/>
+			</p>
+			<p class="address"><br/>
+				<label for="username">Address (Street Number)<small>*</small></label><br/>
+				<input type="text" name="billingAddress" id="billingAddress" value="${address1}"></input><br/><br/>
+				<label for="username">Address Line 2</label><br/>
+				<input type="text" name="billingAddress2" id="billingAddress2" value="${address2}"></input><br/>
+			</p>
+			<p class="city"> <br/>
+				<label for="username">City<small>*</small></label><br/>
+				<input type="text" name="billingCity" id="billingCity" value="${city}"></input><br/>
+			</p>
+			<p class="province">
+				<label for="username">Province<small>*</small></label><br/>
+				<input type="text" name="billingProvince" id="billingProvince" value="${province}"></input><br/>
+			</p>
+			<p class="postalCode">
+				<label for="username">Postal Code<small>*</small></label><br/>
+				<input type="text" name="billingPostalCode" id="billingPostalCode" placeholder="XXX XXX" value="${postal}"></input><br/>
+			</p>
+			<p class="country"><br/>
+				<label for="country">Country<small>*</small></label><br/>
+				<select name="billingCountry">
+					<option>Canada</option>
+					<option>USA</option>
+					<option>Mexico</option>
+					<option>India</option>
+					<option>China</option>
+					<option>Germany</option>
+					<option>France</option>
+				</select>
+			</p>
+			<p class="phone">
+				<label for="username">Phone Number</label><br/>
+				<input type="text" name="billingPhone" id="billingPhone" value="${number}"></input><br/>
+			</p>
+			</div>
+			<br/>Comment:<br/><br/>
+			<textarea name="shippingComment" id="shippingComment" rows="5" cols="69" placeholder="Enter your comment here!" 
+						onclick="clearText()">Enter your comment here!</textarea><br/>
+			<p>
+				<br/><button class="proceedToPayment" name="proceedToPayment" id="proceedToPayment" value="true">Proceed to Payment Page</button><br/>	
+			</p>
+		</form>			
 	</div>	
 	<div class="orderSummary">
 		<p style="font-size: 150%; font-weight: bold;">Order Summary</p><br/>
@@ -93,10 +257,11 @@
 		<p>Shipping: <span style="display: inline; margin-left: 125px;"><f:formatNumber type="currency" >${shippingPrice}</f:formatNumber></span></p><br/>
 		<p>Tax: <span style="display: inline; margin-left: 160px;"><f:formatNumber type="currency" >${taxPrice}</f:formatNumber></span></p><br/>
 		<hr></hr><br/>
-		<p style="font-weight: bold;">Total: <span style="display: inline; margin-left: 150px;"><f:formatNumber type="currency" >${totalPrice}</f:formatNumber></span></p><br/>
+		<p style="font-weight: bold;">Total: <span style="display: inline; margin-left: 150px;">
+			<f:formatNumber type="currency">${totalPrice}</f:formatNumber></span></p><br/>
 		<hr></hr><br/>
-		<FORM action="PaymentSuccessful.jspx" method="POST" class="CHECKOUT">
-			<button action="submit" name="CHECKOUT" class="CHECKOUT" id="CHECKOUT" value="true">Confirm Order</button>
+		<FORM action="checkout" method="POST" class="cartButton">
+			<button action="submit" name="shippingCartButton" class="cartButton" id="shippingCartButton" disabled="disabled">Confirm Order</button>
 		</FORM>
 	</div>
 </body>
