@@ -1,6 +1,7 @@
 package ctrl;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,11 @@ public class Test extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ServletContext context;
 	private BOOKSTORE model;
+	private String removeFromCart;
+	private String incrementQuantity;
+	private String decrementQuantity;
+	private String bid;
+	private String cartButton;
 	
 	public Test() {
 		super();
@@ -44,15 +50,51 @@ public class Test extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/plain");
+		HttpSession session = request.getSession();
+		removeFromCart = request.getParameter("removeFromCart");
+		incrementQuantity = request.getParameter("incrementQuantity");
+		decrementQuantity = request.getParameter("decrementQuantity");
+		bid = request.getParameter("bid");
+		cartButton = request.getParameter("cartButton");
 		
 		String category = request.getParameter("category");
+		ArrayList<BookBean> books = getBooksByCategory(category);
+		request.setAttribute("books", books);
+		
+		// Get all items in the cart
+		getCart(session);
+		
+		// Adding book to the cart
+		if (request.getParameter("addToCart") != null) {// when user presses add to cart button
+			String bookBID = request.getParameter("bookBID");
 
+			BookBean bookItem = null;
+			try {
+				bookItem = model.retrieveBookByBid(bookBID);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			addToCart(bookItem, session); // adds book to cart
+		}
+		
+		// Redirect to corresponding pages
+		if(cartButton != null || removeFromCart != null || incrementQuantity != null || decrementQuantity != null) {
+			request.getRequestDispatcher("/Cart.jspx").forward(request, response);
+		} else {
+			request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
+		}
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+	
+	private ArrayList<BookBean> getBooksByCategory(String category) {
 		Map<String, BookBean> bookInfo = new HashMap<>();
 		ArrayList<BookBean> books = new ArrayList<BookBean>();
 
-		// access model and get all the books in record 
 		if (category != null) {
-			request.setAttribute("category", category);
 			// access model and get book with specific category
 			try {
 				bookInfo = model.retriveBooksByCategory(category);
@@ -61,7 +103,6 @@ public class Test extends HttpServlet {
 			}
 
 		} else {
-			request.setAttribute("category", "View All");
 			// access model and get all the books in record
 			try {
 				bookInfo = model.retriveAllBooks();
@@ -73,15 +114,23 @@ public class Test extends HttpServlet {
 		for (Map.Entry<String, BookBean> entry : bookInfo.entrySet()) {
 			books.add(entry.getValue());
 		}
-
-		request.setAttribute("books", books);
-		request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
+		
+		return books;
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	public void getCart(HttpSession session) {
+
+		if (removeFromCart != null) {
+			removeFromCart(bid, session);// removes book from cart
+		}
+
+		if (incrementQuantity != null) {
+			incrementQuantityOfBook(bid, session);
+		}
+
+		if (decrementQuantity != null) {
+			decrementQuantityOfBook(bid, session);
+		}
 	}
 
 	private void addToCart(BookBean book, HttpSession session) {
