@@ -30,6 +30,7 @@ public class Test extends HttpServlet {
 	private String decrementQuantity;
 	private String bid;
 	private String cartButton;
+	private String confirmOrder;
 	
 	public Test() {
 		super();
@@ -56,6 +57,7 @@ public class Test extends HttpServlet {
 		decrementQuantity = request.getParameter("decrementQuantity");
 		bid = request.getParameter("bid");
 		cartButton = request.getParameter("cartButton");
+		confirmOrder = request.getParameter("confirmOrder");
 		
 		String category = request.getParameter("category");
 		ArrayList<BookBean> books = getBooksByCategory(category);
@@ -77,9 +79,17 @@ public class Test extends HttpServlet {
 			addToCart(bookItem, session); // adds book to cart
 		}
 		
+		if (confirmOrder != null) {
+			List<cartItemBean> cartItems = new ArrayList<>();
+			updateCartPrices(cartItems, session);
+			session.setAttribute("items", cartItems);
+		}
+		
 		// Redirect to corresponding pages
 		if(cartButton != null || removeFromCart != null || incrementQuantity != null || decrementQuantity != null) {
 			request.getRequestDispatcher("/Cart.jspx").forward(request, response);
+		} else if (confirmOrder != null) {
+			request.getRequestDispatcher("/PaymentSuccessful.jspx").forward(request, response);
 		} else {
 			request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
 		}
