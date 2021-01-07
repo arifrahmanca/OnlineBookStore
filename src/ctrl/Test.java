@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.AddressBean;
 import bean.BookBean;
 import bean.cartItemBean;
 import model.BOOKSTORE;
@@ -31,6 +32,10 @@ public class Test extends HttpServlet {
 	private String bid;
 	private String cartButton;
 	private String confirmOrder;
+	private int itemCounter = 0;
+	private boolean isShowCounter = false;
+	private String proceedToPayment;
+	private boolean isCartEmpty = true;
 	
 	public Test() {
 		super();
@@ -58,10 +63,12 @@ public class Test extends HttpServlet {
 		bid = request.getParameter("bid");
 		cartButton = request.getParameter("cartButton");
 		confirmOrder = request.getParameter("confirmOrder");
+		proceedToPayment = request.getParameter("proceedToPayment");
 		
 		String category = request.getParameter("category");
 		ArrayList<BookBean> books = getBooksByCategory(category);
 		request.setAttribute("books", books);
+		request.setAttribute("category", category);
 		
 		// Get all items in the cart
 		getCart(session);
@@ -79,10 +86,62 @@ public class Test extends HttpServlet {
 			addToCart(bookItem, session); // adds book to cart
 		}
 		
+		// Empty cart after placing an order
 		if (confirmOrder != null) {
+			itemCounter = 0;
 			List<cartItemBean> cartItems = new ArrayList<>();
 			updateCartPrices(cartItems, session);
 			session.setAttribute("items", cartItems);
+		}
+		
+		if (itemCounter > 0) {
+			isShowCounter = true;
+			isCartEmpty = false;
+		} else {
+			isShowCounter = false;
+			isCartEmpty = true;
+		}
+		session.setAttribute("itemCounter", itemCounter);
+		session.setAttribute("isCartEmpty", isCartEmpty);
+		session.setAttribute("isShowCounter", isShowCounter);
+		
+		// Getting Shipping and Billing Address
+		if (proceedToPayment != null) {
+			String shippingFirstName = request.getParameter("shippingFirstName");
+			String shippingLastName = request.getParameter("shippingLastName");
+			String shippingAddress = request.getParameter("shippingAddress");
+			String shippingAddress2 = request.getParameter("shippingAddress2");
+			String shippingCity = request.getParameter("shippingCity");
+			String shippingProvince = request.getParameter("shippingProvince");
+			String shippingPostalCode = request.getParameter("shippingPostalCode");
+			String shippingCountry = request.getParameter("shippingCountry"); 
+			String shippingPhone = request.getParameter("shippingPhone");
+			
+			AddressBean shipping = new AddressBean(1, shippingFirstName, shippingLastName, shippingAddress,
+					shippingCity, shippingProvince, shippingCountry, shippingPostalCode, shippingPhone);
+
+			// all billing info provided
+			String billingFirstname = request.getParameter("billingFirstname");
+			String billingLastname = request.getParameter("billingLastname");
+			String billingAddress = request.getParameter("billingAddress"); 
+			String billingAddress2 = request.getParameter("billingAddress2");
+			String billingCity = request.getParameter("billingCity");
+			String billingProvince = request.getParameter("billingProvince");
+			String billingPostalCode = request.getParameter("billingPostalCode");
+			String billingCountry = request.getParameter("billingCountry");
+			String billingPhone = request.getParameter("billingPhone");
+			String sameAs = request.getParameter("hideBilling");
+			
+			AddressBean billing;
+			if (sameAs != null) {
+				billing = shipping;
+			} else {
+				billing = new AddressBean(1, billingFirstname, billingLastname, billingAddress, billingCity, 
+						billingProvince, billingCountry, billingPostalCode, billingPhone);
+			}
+			
+			session.setAttribute("shipping", shipping);
+			session.setAttribute("billing", billing);
 		}
 		
 		// Redirect to corresponding pages
@@ -90,6 +149,8 @@ public class Test extends HttpServlet {
 			request.getRequestDispatcher("/Cart.jspx").forward(request, response);
 		} else if (confirmOrder != null) {
 			request.getRequestDispatcher("/PaymentSuccessful.jspx").forward(request, response);
+		} else if (proceedToPayment != null) {
+			request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
 		} else {
 			request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
 		}
@@ -144,8 +205,8 @@ public class Test extends HttpServlet {
 	}
 
 	private void addToCart(BookBean book, HttpSession session) {
-		if (session.getAttribute("items") == null && book != null) {// if items list is not made make one and add book
-																	// to cart
+		itemCounter++;
+		if (session.getAttribute("items") == null && book != null) {// if items list is not made make one and add book to cart			
 			List<cartItemBean> books = new ArrayList<>();
 
 			cartItemBean item = new cartItemBean(book.getBid(), book.getTitle(), book.getPrice(), book.getCategory(),
@@ -185,10 +246,12 @@ public class Test extends HttpServlet {
 			cartItemBean book = null;
 			boolean found = false;
 
-			for (cartItemBean item : books) {
+			for (cartItemBean item : books) { 
 				if (item.getBid().equals(bid)) {
 					found = true;
 					book = item;
+					int quantity = item.getQuantity();
+					itemCounter -= quantity; 
 				}
 			}
 
@@ -221,6 +284,7 @@ public class Test extends HttpServlet {
 			for (cartItemBean item : books) {
 				if (item.getBid().equals(bid)) {
 					item.incrementQuantity();
+					itemCounter++;
 				}
 			}
 			updateCartPrices(books, session);
@@ -238,8 +302,9 @@ public class Test extends HttpServlet {
 				if (item.getBid().equals(bid)) {
 					item.decrementQuantity();
 					quantity = item.getQuantity();
+					itemCounter--;
 				}
-			}
+			} 
 
 			updateCartPrices(books, session);
 			session.setAttribute("items", books);
