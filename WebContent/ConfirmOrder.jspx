@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1" 
+		pageEncoding="ISO-8859-1" session="true"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+	<LINK rel="StyleSheet" href="${pageContext.request.contextPath}/res/style.css" type="text/css" title="cse4413" media="screen,print"/>
+	<script type="text/javascript"
+	src="${pageContext.request.contextPath}/res/mc.js">;</script>
+	<title>Confirm Order</title>
+	<style>	
+		.shippingDetails {
+			margin-left: 100px;
+			margin-top: 50px;
+			float: left;
+			background-color: cornsilk;
+			padding: 30px;
+			width: 700px;
+		}
+		
+		.orderSummary {
+			margin-right: 100px;
+			margin-top: 50px;
+			float: right;
+			background-color: cornsilk;
+			width: 300px;
+			padding: 20px;
+		}
+		
+		
+		.shipping {
+			float: left;
+		}
+		
+		.billing {
+			float: right;
+			margin-right: 180px;
+		}
+		
+		.confirmOrder {
+			margin-left: 75px;
+			height: 35px;
+			width: 150px;
+		}	
+	</style>		
+</head>
+<body>
+	<div class="header">
+		<div class="inner-header">
+			<div class="logo-container">
+				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+			</div>
+			<c:choose>
+				<c:when test="${isShowCounter}">
+					<FORM action="Test" method="POST">
+						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
+					</FORM>
+				</c:when>
+				<c:otherwise>
+					<FORM action="Test" method="POST">
+						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
+					</FORM>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${isLogged}">
+					<FORM action="Test" method="POST">
+						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Logout</BUTTON>
+					</FORM>
+				</c:when>
+				<c:otherwise>
+					<FORM action="Test" method="POST">
+						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Login</BUTTON>
+					</FORM>
+				</c:otherwise>
+			</c:choose>			
+		</div>
+	</div>	
+
+	<div class="shippingDetails">
+		<p style="font-weight: bold;">SHIPPING OPTIONS</p><br/>
+		<div class="shipping">
+			<p style="font-weight: bold;">Shipping Address:</p><br/>
+			<p>First Name: ${shipping.firstName}</p>
+			<p>Last Name: ${shipping.lastName}</p>
+			<p>Street Number: ${shipping.street}</p>
+			<p>City: ${shipping.city}</p>                  
+			<p>Province: ${shipping.province}</p>
+			<p>Postal Code: ${shipping.zip}</p>                 
+			<p>Country: ${shipping.country}</p>
+			<p>Phone: ${shipping.phone}</p>			
+		</div>
+		<div class="billing">
+			<p style="font-weight: bold;">Billing Information:</p><br/>
+			<p>First Name: ${billing.firstName}</p>
+			<p>Last Name: ${billing.lastName}</p>
+			<p>Street Number: ${billing.street}</p>
+			<p>City: ${billing.city}</p>                  
+			<p>Province: ${billing.province}</p>
+			<p>Postal Code: ${billing.zip}</p>                 
+			<p>Country: ${billing.country}</p>
+			<p>Phone: ${billing.phone}</p>
+		</div>
+	</div>	
+	<div class="orderSummary">
+		<p style="font-size: 150%; font-weight: bold;">Order Summary</p><br/>
+		<p>Subtotal: <span style="display: inline; margin-left: 130px;"><f:formatNumber type="currency" >${subtotalPrice}</f:formatNumber></span></p><br/>
+		<p>Shipping: <span style="display: inline; margin-left: 125px;"><f:formatNumber type="currency" >${shippingPrice}</f:formatNumber></span></p><br/>
+		<p>Tax: <span style="display: inline; margin-left: 160px;"><f:formatNumber type="currency" >${taxPrice}</f:formatNumber></span></p><br/>
+		<hr></hr><br/>
+		<p style="font-weight: bold;">Total: <span style="display: inline; margin-left: 150px;"><f:formatNumber type="currency" >${totalPrice}</f:formatNumber></span></p><br/>
+		<hr></hr><br/>
+		<FORM action="Test" method="POST">
+			<button action="submit" name="confirmOrder" class="confirmOrder" id="confirmOrder" value="true">Confirm Order</button>
+		</FORM>
+	</div>
+</body>
+</html>
+</jsp:root>

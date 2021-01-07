@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+		xmlns:c="http://java.sun.com/jsp/jstl/core" 
+		xmlns:f="http://java.sun.com/jsp/jstl/fmt" version="2.0">
+	<jsp:directive.page contentType="text/html; charset=ISO-8859-1" 
+		pageEncoding="ISO-8859-1" session="true"/>
+	<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+	<LINK rel="StyleSheet" href="${pageContext.request.contextPath}/res/style.css" type="text/css" title="cse4413" media="screen,print"/>
+	<script type="text/javascript"
+	src="${pageContext.request.contextPath}/res/mc.js">;</script>
+	<title>Cart</title>
+	<style>
+		.cartItems {
+			margin-left: 100px;
+			margin-top: 100px;
+			margin-bottom: 100px;
+			float: left;
+			background-color: cornsilk;
+			padding: 20px;
+			width: 700px;
+		}
+		
+		.cartList {
+			font-weight: bold;
+			font-size: 20px;
+			margin-top: 20px;
+			margin-left: 100px;
+		}
+		
+		.orderSummary {
+			margin-right: 100px;
+			margin-top: 100px;
+			float: right;
+			background-color: cornsilk;
+			width: 300px;
+			padding: 20px;
+		}
+		
+		.orderSummary button {
+			width: 200px;
+			background-color: #eee;
+			height: 30px;
+			margin-left: 50px;
+		}
+		.product-list {
+			margin-right: 100px;
+		}
+		.product-list img {
+			float: right;
+		}
+		.product-list h6 {
+			float: left;
+			margin-left: 100px;
+			margin-top: 10px;
+		}
+		
+		.product-form {
+			margin-top: 90px;
+			margin-bottom: 10px;
+			margin-left: 100px;
+		}
+		
+		.product-form form {
+			display: inline-block;
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+		
+		.product-form h6 {
+			display: inline-block;
+		}
+	
+		.product-form button {
+			border-radius: 3px;
+   			background-color: #4CAF50;
+    		color: white;
+    		border: white;
+    		display:block;
+    		padding: 15px 32px;
+    		text-align: center;
+    		-webkit-transition-duration: 0.4s;
+    		transition-duration: 0.4s;
+    		margin: 16px auto !important;
+    		text-decoration: none;
+    		font-size: 16px;
+    		cursor: pointer;
+    		font-weight: bold;
+		}			
+	</style>
+</head>
+<body>
+	<div class="header">
+		<div class="inner-header">
+			<div class="logo-container">
+				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+			</div>
+			<c:choose>
+				<c:when test="${isShowCounter}">
+					<FORM action="Test" method="POST">
+						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
+					</FORM>
+				</c:when>
+				<c:otherwise>
+					<FORM action="Test" method="POST">
+						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
+					</FORM>
+				</c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${isLogged}">
+					<FORM action="Test" method="POST">
+						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Logout</BUTTON>
+					</FORM>
+				</c:when>
+				<c:otherwise>
+					<FORM action="Test" method="POST">
+						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Login</BUTTON>
+					</FORM>
+				</c:otherwise>
+			</c:choose>			
+		</div>
+	</div>	
+	
+	<div class="cartItems">
+		<c:choose>
+			<c:when test="${isCartEmpty}">
+				<p class="cartList">You have no items in your cart!</p>
+			</c:when>
+			<c:otherwise>
+				<p class="cartList"> List of items in your cart:</p><br/><br/> 
+				<c:forEach items="${items}" var="element"> 
+					<div class="product-list">
+						<img src="${pageContext.request.contextPath}/images/BookLogo.jpg" width="250"/><br/>
+						<h6> Book ID: ${element.bid} </h6><br/>
+						<h6> Title: ${element.title} </h6><br/>
+						<h6> Category: ${element.category} </h6><br/>
+						<h6> Price: <f:formatNumber type="currency" >${element.price}</f:formatNumber></h6><br/>
+					</div>
+					<div class="product-form">												
+						<FORM action="Test" method="POST">
+				      		<INPUT type="hidden" name="bid" value="${element.bid}"/>
+				      		<button action="submit" name="decrementQuantity" class="decrementQuantity" id="decrementQuantity" value="true">-</button>
+				      	</FORM>	
+				      	<h6>Quantity: ${element.quantity}</h6>					
+				      	<FORM action="Test" method="POST">
+				      		<INPUT type="hidden" name="bid" value="${element.bid}"/>
+				      		<button action="submit" name="incrementQuantity" class="incrementQuantity" id="incrementQuantity" value="true">+</button>
+				      	</FORM>	
+						<FORM action="Test" method="POST">
+				      		<INPUT type="hidden" name="bid" value="${element.bid}"/>
+				      		<button action="submit" name="removeFromCart" class="removeFromCart" id="removeFromCart" value="true">Remove From Cart</button>
+				      	</FORM>								
+					</div>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</div>
+	<div class="orderSummary">
+		<p style="font-size: 150%; font-weight: bold;">Order Summary</p><br/>
+		<p>Subtotal: <span style="display: inline; margin-left: 130px;"><f:formatNumber type="currency" >${subtotalPrice}</f:formatNumber></span></p><br/>
+		<p>Shipping: <span style="display: inline; margin-left: 125px;"><f:formatNumber type="currency" >${shippingPrice}</f:formatNumber></span></p><br/>
+		<p>Tax: <span style="display: inline; margin-left: 160px;"><f:formatNumber type="currency" >${taxPrice}</f:formatNumber></span></p><br/>
+		<hr></hr><br/>
+		<p style="font-weight: bold;">Total: <span style="display: inline; margin-left: 150px;"><f:formatNumber type="currency" >${totalPrice}</f:formatNumber></span></p><br/>
+		<hr></hr><br/>
+		<FORM action="Redirect.jspx" method="POST">
+			<button action="Redirect.jspx" name="checkoutButton" id="checkoutButton" value="true" >Proceed to Checkout</button>
+		</FORM>
+	</div>
+</body>
+</html>
+</jsp:root>
