@@ -36,6 +36,9 @@ public class Test extends HttpServlet {
 	private boolean isShowCounter = false;
 	private String proceedToPayment;
 	private boolean isCartEmpty = true;
+	private String checkoutButton;
+	boolean isLoginSuccess = false;
+	boolean isLogged = false;
 	
 	public Test() {
 		super();
@@ -45,7 +48,7 @@ public class Test extends HttpServlet {
 		super.init(config);
 		context = getServletContext();
 
-		try {
+		try { 
 			model = BOOKSTORE.getInstance();
 			context.setAttribute("model", model);
 		} catch (ClassNotFoundException e) {
@@ -64,6 +67,17 @@ public class Test extends HttpServlet {
 		cartButton = request.getParameter("cartButton");
 		confirmOrder = request.getParameter("confirmOrder");
 		proceedToPayment = request.getParameter("proceedToPayment");
+		checkoutButton = request.getParameter("checkoutButton");
+		
+		String login = request.getParameter("login");
+		String logout = request.getParameter("logout");
+		String loginButton = request.getParameter("login-button");
+		String paymentLogin = request.getParameter("payment-login");
+		boolean isRedirected = false;
+		
+		if (logout != null) {
+			isLogged = false;
+		}
 		
 		String category = request.getParameter("category");
 		ArrayList<BookBean> books = getBooksByCategory(category);
@@ -101,9 +115,7 @@ public class Test extends HttpServlet {
 			isShowCounter = false;
 			isCartEmpty = true;
 		}
-		session.setAttribute("itemCounter", itemCounter);
-		session.setAttribute("isCartEmpty", isCartEmpty);
-		session.setAttribute("isShowCounter", isShowCounter);
+		
 		
 		// Getting Shipping and Billing Address
 		if (proceedToPayment != null) {
@@ -139,26 +151,54 @@ public class Test extends HttpServlet {
 				billing = new AddressBean(1, billingFirstname, billingLastname, billingAddress, billingCity, 
 						billingProvince, billingCountry, billingPostalCode, billingPhone);
 			}
-			
 			session.setAttribute("shipping", shipping);
 			session.setAttribute("billing", billing);
 		}
 		
+		session.setAttribute("itemCounter", itemCounter);
+		session.setAttribute("isCartEmpty", isCartEmpty);
+		session.setAttribute("isShowCounter", isShowCounter);
+		session.setAttribute("isLogged", isLogged); 
+		
 		// Redirect to corresponding pages
-		if(cartButton != null || removeFromCart != null || incrementQuantity != null || decrementQuantity != null) {
+		if (login != null) {
+			isRedirected = false;
+			session.setAttribute("isRedirected", isRedirected);
+			session.setAttribute("isLogged", isLogged); 
+			request.getRequestDispatcher("/Login.jspx").forward(request, response);
+		} else if(cartButton != null || removeFromCart != null || incrementQuantity != null || decrementQuantity != null) {
 			request.getRequestDispatcher("/Cart.jspx").forward(request, response);
 		} else if (confirmOrder != null) {
 			request.getRequestDispatcher("/PaymentSuccessful.jspx").forward(request, response);
-		} else if (proceedToPayment != null) {
+		} else if (proceedToPayment != null) { 
 			request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
+		} else if (checkoutButton != null) {
+			isRedirected = true;
+			session.setAttribute("isRedirected", isRedirected);
+			if (isLogged) {
+				request.getRequestDispatcher("/Checkout.jspx").forward(request, response);
+			} else {
+				request.getRequestDispatcher("/Redirect.jspx").forward(request, response);
+			}  
+		} else if (paymentLogin != null) {
+			request.getRequestDispatcher("/Login.jspx").forward(request, response);
+		} else if (loginButton != null) {
+			isLogged = true;
+			isRedirected = (boolean) session.getAttribute("isRedirected");
+			session.setAttribute("isLogged", isLogged); 
+			if (isRedirected) {
+				request.getRequestDispatcher("/Checkout.jspx").forward(request, response);
+			} else {
+				request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
+			} 
 		} else {
 			request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
-		}
+		}		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		doGet(request, response); 
 	}
 	
 	private ArrayList<BookBean> getBooksByCategory(String category) {
