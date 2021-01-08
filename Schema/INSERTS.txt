@@ -2,7 +2,13 @@ INSERT INTO Book (bid, title, price, category)
 VALUES 
 ('b001', 'Little Prince', 20, 'Fiction'),
 ('b002','Physics', 201, 'Science'),
-('b003','Mechanics' ,100,'Engineering');
+('b003','Mechanics' ,100,'Engineering'),
+('b004', 'Ready Player One', 10, 'Fiction'),
+('b005', 'Love Your Life', 25, 'Fiction'),
+('b006', 'A Brief History Of Time', 14, 'Science'),
+('b007', 'Relativity', 14, 'Science'),
+('b008','Introduction To Engineering', 129,'Engineering'),
+('b009','Mechanics', 129,'Engineering');
 
 INSERT INTO Address (street, province, country, zip, phone) 
 VALUES 
