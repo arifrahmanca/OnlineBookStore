@@ -118,6 +118,12 @@
   margin-top: auto;
 }
 
+.bookInfo p {
+	align-content: center;
+	text-align: center;
+	font-weight: bold;
+}
+
 .clickable h5,h6,h8{
 	color:black;
 	font-size:16px;
@@ -222,4 +228,29 @@
   }
 }
 
+.cartButton {
+	margin-top: 25px;
+	float: right;
+	width: 60px;
+	height: 30px;
+	font-weight: bold;
+	font-size: 15px;
+	background-color: #4CAF50;
+}
 
+.itemCounter {
+	color: red;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.login-logout {
+	margin-top: 25px;
+	margin-right: 20px;
+	float: right;
+	width: 70px;
+	height: 30px;
+	font-weight: bold;
+	font-size: 15px;
+	background-color: #4CAF50;
+}
