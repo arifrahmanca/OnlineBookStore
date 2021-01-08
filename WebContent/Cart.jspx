@@ -115,15 +115,15 @@
 			<c:choose>
 				<c:when test="${isLogged}">
 					<FORM action="Test" method="POST">
-						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Logout</BUTTON>
+						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
 					<FORM action="Test" method="POST">
-						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Login</BUTTON>
+						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
-			</c:choose>			
+			</c:choose>		
 		</div>
 	</div>	
 	
@@ -169,9 +169,18 @@
 		<hr></hr><br/>
 		<p style="font-weight: bold;">Total: <span style="display: inline; margin-left: 150px;"><f:formatNumber type="currency" >${totalPrice}</f:formatNumber></span></p><br/>
 		<hr></hr><br/>
-		<FORM action="Redirect.jspx" method="POST">
-			<button action="Redirect.jspx" name="checkoutButton" id="checkoutButton" value="true" >Proceed to Checkout</button>
-		</FORM>
+		<c:choose>
+			<c:when test="${isCartEmpty}">
+				<FORM action="Test" method="POST">
+					<button action="Redirect.jspx" name="checkoutButton" id="checkoutButton" value="true" disabled="disabled">Proceed to Checkout</button>
+				</FORM>
+			</c:when>
+			<c:otherwise>
+				<FORM action="Test" method="POST">
+					<button action="submit" name="checkoutButton" id="checkoutButton" value="true">Proceed to Checkout</button>
+				</FORM>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </body>
 </html>

@@ -123,15 +123,15 @@
 			<c:choose>
 				<c:when test="${isLogged}">
 					<FORM action="Test" method="POST">
-						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Logout</BUTTON>
+						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
 					<FORM action="Test" method="POST">
-						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Login</BUTTON>
+						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
-			</c:choose>			
+			</c:choose>		
 		</div>
 	</div>
 	<div class="creditCard">

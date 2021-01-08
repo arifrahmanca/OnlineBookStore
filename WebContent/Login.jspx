@@ -67,8 +67,8 @@
 		}
 		
 		.payment-login {
-			margin-top: 150px;
-			margin-left: 500px;
+			margin-top: 100px;
+			margin-left: 525px;
 			width: 300px;
 			display: grid;
 			grid-template-columns: [labels] auto [controls] 1fr [info] 1fr;
@@ -122,12 +122,12 @@
 			<c:choose>
 				<c:when test="${isLogged}">
 					<FORM action="Test" method="POST">
-						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Logout</BUTTON>
+						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
 					<FORM action="Test" method="POST">
-						<BUTTON class="loginButton" name="loginButton" id="loginButton" value="true">Login</BUTTON>
+						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>			
@@ -135,17 +135,22 @@
 	</div>	
 
 	 <div class="payment-login">
-			<form action="Checkout.jspx" method="POST" onsubmit="return validateLogin();">
+			<form action="Test" method="POST" onsubmit="return validateLogin();">
 				<fieldset>
 				<legend>Login</legend><br/>
 					<div class="loginArea">
+						<c:choose>
+							<c:when test="${isLoginFailed}">
+								<p class="login-failed">Login failed! You must provide correct credentials.</p>
+							</c:when>
+						</c:choose>
 						<label for="paymentUsername">Username:</label><br/>
 						<input class="login-input" type="text" name="paymentUsername" id="paymentUsername"></input><br/><br/>
 						<label for="paymentPassword">Password:</label><br/>
 						<input class="login-input" type="password" name="loginPassword" id="loginPassword"></input><br/>
 						<input  type="checkbox" onclick="showPassword()"></input>
 						<label style="vertical-align: 40%; margin-left: 5px;">Show Password</label><br/><br/>
-						<button action="submit" name="payment-login" id="payment-login">Login</button><br/>
+						<button action="submit" name="login-button" id="login-button">Login</button><br/>
 					</div>
 				</fieldset>
 			</form>
