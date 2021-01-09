@@ -5,7 +5,9 @@
 		<Resource name="jdbc/EECS" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 				  type="javax.sql.DataSource"
 				  driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
-				  url="jdbc:derby:E:/YU/WORKSPACE_2021/BookStore_DB/BookStore_DB"/>
+				  url="jdbc:derby:E:/YU/WORKSPACE_1/OnlineBookStore/BookStore_DB"/>
 		<ResourceLink global="jdbc/EECS" name="jdbc/EECS" type="javax.sql.DataSource" />
 		
 </Context>
+
+
