@@ -9,10 +9,10 @@ public class OrderBean {
 	private int quantity;
 	private AddressBean shipping;
 	private AddressBean billing;
-	private String comment;
+//	private String comment;
 	
 	public OrderBean (int orderId, String lastName, String firstName, String status, int quantity, 
-			AddressBean shipping, AddressBean billing, String comment) {
+			AddressBean shipping, AddressBean billing) {
 		this.orderId = orderId;
 		this.lastName = lastName;
 		this.firstName = firstName;
@@ -20,7 +20,7 @@ public class OrderBean {
 		this.quantity = quantity;
 		this.shipping = shipping;
 		this.billing = billing;
-		this.comment = comment;
+//		this.comment = comment;
 	}
 	
 	public AddressBean getShipping() {
@@ -39,13 +39,13 @@ public class OrderBean {
 		this.billing = billing;
 	}
 
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+//	public String getComment() {
+//		return comment;
+//	}
+//
+//	public void setComment(String comment) {
+//		this.comment = comment;
+//	}
 
 	public int getQuantity() {
 		return quantity;

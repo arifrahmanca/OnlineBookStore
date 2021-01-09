@@ -70,11 +70,7 @@ public class BOOKSTORE {
 	}
 
 	public Map<String, BookBean> retriveBooksByCategory(String category) throws SQLException {
-		if (validBookCategory(category)) {
-			return book.retrieveBooksByCategory(category);
-		}else {
-			return new HashMap<String,BookBean>();
-		}
+		return book.retrieveBooksByCategory(category);
 	}
 	
 	public BookBean retrieveBookByBid(String bid) throws SQLException {
@@ -135,10 +131,6 @@ public class BOOKSTORE {
 
 		return subtotal + shipping + tax;
 	}	
-	
-	public Boolean validBookCategory(String category) {
-		return category.matches("[A-Z][a-z]*");
-	}
 	
 	public String insertUser(String username, String hash) {
 		String userID = username;
@@ -292,8 +284,8 @@ public class BOOKSTORE {
 			billing.put("name", name).put("street", b_street).put("state", b_province).put("zip", b_zip);
 			jsonOrder.put("billToCountry = " + b_country, billing);
 			
-			String comment = item.getOrder().getComment();
-			jsonOrder.put("comment", comment);
+//			String comment = item.getOrder().getComment();
+//			jsonOrder.put("comment", comment);
 			
 			// Building items
 			JSONObject orderItem = new JSONObject();

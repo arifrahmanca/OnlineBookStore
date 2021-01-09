@@ -44,11 +44,13 @@ public class OrderDAO {
 			String fName = result.getString("FNAME");
 			String lName = result.getString("LNAME");
 			String street = result.getString("STREET");
+			String city = "Toronto";
 			String province = result.getString("PROVINCE");
 			String country = result.getString("COUNTRY");
 			String zip = result.getString("ZIP");
+			String phone = "";
 			
-			addressBean = new AddressBean(id, fName, lName, street, province, country, zip);
+			addressBean = new AddressBean(id, fName, lName, street, city, province, country, zip, phone);
 		}
 		result.close();
 		stmt.close();
@@ -73,11 +75,13 @@ public class OrderDAO {
 			String firstName = r.getString("FNAME");
 			String lastName = r.getString("LNAME");
 			String street = r.getString("STREET");
+			String city = "Toronto";
 			String province = r.getString("PROVINCE");
 			String country = r.getString("COUNTRY");
 			String zip = r.getString("ZIP");
+			String phone = "";
 			
-			address = new AddressBean(id, firstName, lastName, street, province, country, zip);
+			address = new AddressBean(id, firstName, lastName, street, city, province, country, zip, phone);
 		}
 		r.close();
 		p.close();
@@ -99,8 +103,8 @@ public class OrderDAO {
 	}
 	
 	public List<OrderItemBean> purchasedBookOrders(String bid) throws SQLException {
-		String query = "SELECT * FROM BOOK, PO, POITEM, BILLINGADDRESS WHERE BOOK.BID=? "
-				+ "AND POITEM.BID=? AND PO.ID=POITEM.ID AND  BILLINGADDRESS.ID=PO.ID";		
+		String query = "SELECT * FROM BOOK, PO, POITEM, ADDRESS WHERE BOOK.BID=? "
+				+ "AND POITEM.BID=? AND PO.ID=POITEM.ID AND  ADDRESS.ID=PO.ID";		
 		List<OrderItemBean> bookList = new ArrayList<OrderItemBean>();
 		
 		Connection con = (Connection) this.ds.getConnection();
@@ -118,14 +122,17 @@ public class OrderDAO {
 			int quantity = r.getInt("QUANTITY");
 			
 			String street = r.getString("STREET");
+			String city = "Toronto";
 			String province = r.getString("PROVINCE");
 			String country = r.getString("COUNTRY");
 			String zip = r.getString("ZIP");
-			AddressBean billing = new AddressBean(id, fName, lName, street, province, country, zip);
-			AddressBean shipping = retirveAddressByBid(bid);
-			String comment = r.getString("COMMENT");
+			String phone = "";
 			
-			OrderBean order = new OrderBean(id, lName, fName, status, quantity, shipping, billing, comment);
+			AddressBean billing = new AddressBean(id, fName, lName, street, city, province, country, zip, phone);
+			AddressBean shipping = retirveAddressByBid(bid);
+//			String comment = r.getString("COMMENT");
+			
+			OrderBean order = new OrderBean(id, lName, fName, status, quantity, shipping, billing);
 			
 			String bookID = r.getString("BID");
 			String title = r.getString("TITLE");
@@ -159,9 +166,9 @@ public class OrderDAO {
 			int addressId = results.getInt("ADDRESS");
 			AddressBean shipping = getAddressById(addressId);
 			AddressBean billing = shipping;
-			String comment = "";
+//			String comment = "";
 			
-			OrderBean ob = new OrderBean(orderId, lastName, firstName, status, quantity, shipping, billing, comment);
+			OrderBean ob = new OrderBean(orderId, lastName, firstName, status, quantity, shipping, billing);
 			orderLists.add(ob);
 		}
 

@@ -130,56 +130,12 @@ public class BookDAO {
 		return bookInfo;
 	}
 	
-// 	public List<OrderItemBean> purchasedBookOrders(String bid) throws SQLException {
-// 		String query = "SELECT * FROM BOOK, PO, POITEM, ADDRESS WHERE BOOK.BID=? AND POITEM.BID=? AND PO.ID=POITEM.ID AND ADDRESS.ID=PO.ID";		
-// 		List<OrderItemBean> bookList = new ArrayList<OrderItemBean>();
-		
-// 		Connection con = (Connection) this.ds.getConnection();
-// 		PreparedStatement p = con.prepareStatement(query);
-// 		p.setString(1,bid);
-// 		p.setString(2, bid);
-		
-// 		ResultSet r = p.executeQuery();
-		
-// 		while(r.next()){
-// 			int id = r.getInt("ID");
-// 			String lName = r.getString("LNAME");
-// 			String fName = r.getString("FNAME");
-// 			String status = r.getString("STATUS");
-// 			int quantity = r.getInt("QUANTITY");
-			
-// 			String street = r.getString("STREET");
-// 			String province = r.getString("PROVINCE");
-// 			String country = r.getString("COUNTRY");
-// 			String zip = r.getString("ZIP");
-// 			AddressBean address = new AddressBean(id, fName, lName, street, province, country, zip);
-// 			OrderBean order = new OrderBean(id, lName, fName, status, quantity, address);
-			
-// 			String bookID = r.getString("BID");
-// 			String title = r.getString("TITLE");
-// 			int price = r.getInt("PRICE");
-// 			String bookCategory = r.getString("CATEGORY");
-// 			BookBean book = new BookBean(bookID, title, price,bookCategory);			
-			
-// 			OrderItemBean item = new OrderItemBean(order, book);			
-// 			bookList.add(item);
-// 		}
-// 		r.close();
-// 		p.close();
-// 		con.close();
-// 		return bookList;
-// 	}
-	
-	
 	public List<BookReviewBean> retrieveReviewsByBID(String bid) throws SQLException {
-		String query = "select * from BOOKREVIEWS WHERE BID=?";
+		String query = "select * from BOOKREVIEWS WHERE BID='" + bid + "'";
 		
 		List<BookReviewBean> rv = new ArrayList<BookReviewBean>();
 		Connection con = (Connection) this.ds.getConnection();
-		PreparedStatement p = con.prepareStatement(query);
-		p.setString(1, bid);
-		
-		
+		PreparedStatement p = con.prepareStatement(query);		
 		ResultSet r = p.executeQuery();
 		
 		while(r.next()){

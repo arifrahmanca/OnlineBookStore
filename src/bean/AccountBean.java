@@ -59,7 +59,7 @@ public class AccountBean {
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		AccountBean acc= new AccountBean();
 		String hash = acc.hashPassword("test1");
-		acc = new AccountBean("Jaiveer", hash);
+		acc = new AccountBean("Arif", hash);
 		
 		System.out.println(acc.getHashOfPass());
 	}
