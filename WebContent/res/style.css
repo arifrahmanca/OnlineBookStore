@@ -228,6 +228,12 @@
   }
 }
 
+.itemCounter {
+	color: red;
+	font-weight: bold;
+	font-size: 15px;
+}
+
 .cartButton {
 	margin-top: 25px;
 	float: right;
@@ -236,13 +242,7 @@
 	font-weight: bold;
 	font-size: 15px;
 	background-color: #4CAF50;
-}
-
-.itemCounter {
-	color: red;
-	font-weight: bold;
-	font-size: 15px;
-}
+}	
 
 .login-logout {
 	margin-top: 25px;
@@ -254,3 +254,5 @@
 	font-size: 15px;
 	background-color: #4CAF50;
 }
+
+
