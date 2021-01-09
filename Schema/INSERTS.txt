@@ -1,0 +1,57 @@
+INSERT INTO Book (bid, title, price, category) 
+VALUES 
+('b001', 'Little Prince', 20, 'Fiction'),
+('b002','Physics', 201, 'Science'),
+('b003','Mechanics' ,100,'Engineering'),
+('b004', 'Ready Player One', 10, 'Fiction'),
+('b005', 'Love Your Life', 25, 'Fiction'),
+('b006', 'A Brief History Of Time', 14, 'Science'),
+('b007', 'Relativity', 14, 'Science'),
+('b008','Introduction To Engineering', 129,'Engineering'),
+('b009','Mechanics', 129,'Engineering');
+
+INSERT INTO Address (street, province, country, zip, phone) 
+VALUES 
+('123 Yonge St', 'ON', 'Canada', 'K1E 6T5' ,'647-123-4567'),
+('445 Avenue rd', 'ON', 'Canada', 'M1C 6K5' ,'416-123-8569'),
+('789 Keele St.', 'ON', 'Canada', 'K3C 9T5' ,'416-123-9568');
+
+INSERT INTO PO (lname, fname, status, address) 
+VALUES 
+('John', 'White', 'PROCESSED', 1),
+('Peter', 'Black', 'DENIED', 2),
+('Andy', 'Green', 'ORDERED', 3);
+
+INSERT INTO POItem (id, bid, price, quantity) 
+VALUES 
+(1, 'b001', 20, 1),
+(2, 'b002', 201, 2),
+(3, 'b003', 100, 3);
+
+INSERT INTO VisitEvent (day, bid, eventtype) 
+VALUES 
+('12202015', 'b001', 'VIEW'),
+('12242015', 'b001', 'CART'),
+('12252015', 'b001', 'PURCHASE');
+
+INSERT INTO BOOKEXTRA (description, bid)
+VALUES
+('A Little Princess is a childrens novel by Frances Hodgson Burnett, first published as a book in 1905. It is an expanded version of the short story Sara Crewe: or, What Happened at Miss Minchins, which was serialized in St. Nicholas Magazine from December 1887, and published in book form in 1888.', 'b001'),
+('Physics is the natural science that studies matter, its motion and behavior through space and time, and the related entities of energy and force. Physics is one of the most fundamental scientific disciplines, and its main goal is to understand how the universe behaves.', 'b002'),
+('Mechanical engineering is an engineering branch that combines engineering physics and mathematics principles with materials science to design, analyze, manufacture, and maintain mechanical systems. It is one of the oldest and broadest of the engineering branches.', 'b003'),
+('Ready Player One is a 2011 science fiction novel, and the debut novel of American author Ernest Cline. The story, set in a dystopia in 2045, follows protagonist Wade Watts on his search for an Easter egg in a worldwide virtual reality game, the discovery of which would lead him to inherit the game creators fortune.', 'b004'),
+('Ready Player Two is a science fiction novel by American author Ernest Cline released in 2020. It is the sequel to his 2011 debut novel Ready Player One. Plans for a Ready Player One sequel were first announced back in 2015, though Cline did not begin writing the book until late-2017.', 'b005'),
+('A Brief History of Time: From the Big Bang to Black Holes is a popular-science book on cosmology by English physicist Stephen Hawking. It was first published in 1988. Hawking wrote the book for readers without prior knowledge of the universe and people who are just interested in learning something new.', 'b006'),
+('The theory of relativity usually encompasses two interrelated theories by Albert Einstein: special relativity and general relativity. Special relativity applies to all physical phenomena in the absence of gravity. General relativity explains the law of gravitation and its relation to other forces of nature.', 'b007'),
+('Appropriate for undergraduate-level courses in Introduction to Engineering Experimentation found in departments of Mechanical Civil, and Electrical Engineering.', 'b008'),
+('Mechanical engineering is an engineering branch that combines engineering physics and mathematics principles with materials science to design, analyze, manufacture, and maintain mechanical systems.', 'b009');
+
+
+INSERT INTO BOOKREVIEWS (bid, review,rating, firstname, lastname) 
+VALUES 
+('b001', 'Great Book!', 4, 'Arif', 'Rahman');
+('b001', 'Awesome book', 5, 'Farheen', 'Lana');
+('b001', 'Worth reading!', 4, 'Fayaaz', 'Afeef');
+('b002', 'Booring!', 2, 'Jaiveer', 'Singh');
+('b008', 'Nice book!', 4, 'Robert', 'Tonk');
+
