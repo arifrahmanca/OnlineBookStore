@@ -119,14 +119,7 @@ public class OnlineBookStore extends HttpServlet {
 		} else {
 			isShowCounter = false;
 			isCartEmpty = true;
-		}
-		
-		
-		// Getting Shipping and Billing Address
-		if (proceedToPayment != null) {
-			setAddress(request, session);
-		}
-		
+		}		
 		session.setAttribute("itemCounter", itemCounter);
 		session.setAttribute("isCartEmpty", isCartEmpty);
 		session.setAttribute("isShowCounter", isShowCounter);
@@ -143,6 +136,7 @@ public class OnlineBookStore extends HttpServlet {
 		} else if (confirmOrder != null) {
 			request.getRequestDispatcher("/PaymentSuccessful.jspx").forward(request, response);
 		} else if (proceedToPayment != null) { 
+			setAddress(request, session);
 			request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
 		} else if (paymentRegister != null) {
 			request.getRequestDispatcher("/Register.jspx").forward(request, response);
