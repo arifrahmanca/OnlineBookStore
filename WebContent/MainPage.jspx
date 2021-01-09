@@ -19,28 +19,28 @@
 	<div class="header">
 		<div class="inner-header">
 			<div class="logo-container">
-				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+				<a href="${pageContext.request.contextPath}/OnlineBookStore">Online Book Store</a>
 			</div>
 			<c:choose>
 				<c:when test="${isShowCounter}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${isLogged}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
@@ -48,7 +48,7 @@
 		</div>
 	</div>
 	
-	<FORM action="Test" method="POST" class="form">
+	<FORM action="OnlineBookStore" method="POST" class="form">
 		<div class="menu">
 			<div class="dropdown">
 				<h8 class="dropbtn">Filter by category</h8>
@@ -57,10 +57,6 @@
 				  	<input type="submit" name="category" value="Engineering"></input>
 				  	<input type="submit" name="category" value="Fiction"></input>
 				  	<input type="submit" name="category" value="Science"></input>
-				  	<input type="submit" name="category" value="Business and Finance"></input>
-				  	<input type="submit" name="category" value="Entertainment"></input>
-				  	<input type="submit" name="category" value="History"></input>
-				  	<input type="submit" name="category" value="Romance"></input>
 			  	</div>
 			</div>
 			<h5>Current Category: ${category}</h5>
@@ -78,22 +74,18 @@
 			      		<p>Title: ${element.title}</p>
 			      		<p>Category: ${element.category}</p>
 			      		<p><f:formatNumber type="currency" >${element.price}</f:formatNumber></p>
-			      	</div>		      	
-			   			      	
-			      <!-- 
+			      	</div>	
 			      	
-			      	<FORM action="ViewItem.jspx" method="POST" class="viewItem">
-			      		<INPUT type="hidden" name="viewBook" value="${element.bid}"/>
-			      		<BUTTON action="submit" name="viewItem" value="true">View Details</BUTTON>
-			      </FORM>
-			      
-			       -->	
-			      
-			      <FORM action="Test" method="POST" class="addToCart">
+			      	
+			      		<FORM action="OnlineBookStore" method="POST" class="viewItem">
+			      			<BUTTON action="submit" name="viewItem" value="${element.bid}">View Details</BUTTON>
+			     	 	</FORM>
+			      	 
+			      		  	
+			        <FORM action="OnlineBookStore" method="POST" class="addToCart">
 			      		<INPUT type="hidden" name="bookBID" value="${element.bid}"/>
 			      		<BUTTON action="submit" name="addToCart" value="true">Add to cart</BUTTON>
-			      </FORM>
-			      
+			       </FORM>			      
 			    </div>
 			</div>
 		</c:forEach>

@@ -199,8 +199,25 @@
 		}
 		
 		.proceedToPayment {
-			height: 35px;
-			width: 250px;
+			border-radius: 3px;
+   			background-color: #4CAF50;
+    		color: white;
+    		border: white;
+    		display:block;
+    		padding: 15px;
+    		text-align: center;
+    		-webkit-transition-duration: 0.4s;
+    		transition-duration: 0.4s;
+    		margin: 16px auto !important;
+    		text-decoration: none;
+    		font-size: 14px;
+    		cursor: pointer;
+    		width: 700px;
+		}
+		
+		.proceedToPayment:hover {
+			background-color:green;
+    		color: white;
 		}
 		
 	</style>
@@ -209,28 +226,28 @@
 	<div class="header">
 		<div class="inner-header">
 			<div class="logo-container">
-				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+				<a href="${pageContext.request.contextPath}/OnlineBookStore">Online Book Store</a>
 			</div>
 			<c:choose>
 				<c:when test="${isShowCounter}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${isLogged}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
@@ -241,7 +258,7 @@
 	<div class="shippingDetails">
 		<p>SHIPPING OPTIONS</p><br/>
 		<p style="font-weight: bold;">Shipping Address:</p><br/>
-		<form action="Test" method="POST" class="shippingForm" onsubmit="return validateShipping();">
+		<form action="OnlineBookStore" method="POST" class="shippingForm" onsubmit="return validateShipping();">
 			<p class="fName">
 				<label for="firstname">First Name<small>*</small></label><br/>
 				<input type="text" name="shippingFirstName" id="shippingFirstName" value="${firstName}"></input><br/>
@@ -344,10 +361,10 @@
 		<p>Subtotal: <span style="display: inline; margin-left: 130px;"><f:formatNumber type="currency" >${subtotalPrice}</f:formatNumber></span></p><br/>
 		<p>Shipping: <span style="display: inline; margin-left: 125px;"><f:formatNumber type="currency" >${shippingPrice}</f:formatNumber></span></p><br/>
 		<p>Tax: <span style="display: inline; margin-left: 160px;"><f:formatNumber type="currency" >${taxPrice}</f:formatNumber></span></p><br/>
-		<hr></hr><br/>
+		<hr/><br/>
 		<p style="font-weight: bold;">Total: <span style="display: inline; margin-left: 150px;">
 			<f:formatNumber type="currency">${totalPrice}</f:formatNumber></span></p><br/>
-		<hr></hr><br/>
+		<hr/><br/>
 		<FORM action="" method="POST">
 			<button action="submit" name="shippingCartButton" class="checkoutButton" id="shippingCartButton" disabled="disabled">Confirm Order</button>
 		</FORM>

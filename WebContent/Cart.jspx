@@ -43,16 +43,28 @@
 		}
 		
 		.orderSummary button {
-			width: 200px;
-			background-color: #eee;
-			height: 30px;
-			margin-left: 50px;
+			width: 300px;			
+			margin-left: 50px;			
+			border-radius: 3px;
+   			background-color: #4CAF50;
+    		color: white;
+    		border: white;
+    		display:block;
+    		padding: 15px 30px;
+    		text-align: center;
+    		-webkit-transition-duration: 0.4s;
+    		transition-duration: 0.4s;
+    		margin: 16px auto !important;
+    		text-decoration: none;
+    		font-size: 16px;
+    		cursor: pointer;
 		}
 		.product-list {
 			margin-right: 100px;
 		}
 		.product-list img {
 			float: right;
+			width: 220px;
 		}
 		.product-list h6 {
 			float: left;
@@ -68,12 +80,12 @@
 		
 		.product-form form {
 			display: inline-block;
-			margin-left: 10px;
-			margin-right: 10px;
+			margin-right: 30px;
 		}
 		
 		.product-form h6 {
 			display: inline-block;
+			margin-right: 30px;
 		}
 	
 		.product-form button {
@@ -82,7 +94,7 @@
     		color: white;
     		border: white;
     		display:block;
-    		padding: 15px 32px;
+    		padding: 15px 30px;
     		text-align: center;
     		-webkit-transition-duration: 0.4s;
     		transition-duration: 0.4s;
@@ -90,36 +102,41 @@
     		text-decoration: none;
     		font-size: 16px;
     		cursor: pointer;
-    		font-weight: bold;
-		}			
+		}		
+		
+		.product-form button:hover,
+		.orderSummary button:hover {
+			background-color:green;
+    		color: white;
+		}	
 	</style>
 </head>
 <body>
 	<div class="header">
 		<div class="inner-header">
 			<div class="logo-container">
-				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+				<a href="${pageContext.request.contextPath}/OnlineBookStore">Online Book Store</a>
 			</div>
 			<c:choose>
 				<c:when test="${isShowCounter}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${isLogged}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
@@ -136,23 +153,23 @@
 				<p class="cartList"> List of items in your cart:</p><br/><br/> 
 				<c:forEach items="${items}" var="element"> 
 					<div class="product-list">
-						<img src="${pageContext.request.contextPath}/images/BookLogo.jpg" width="250"/><br/>
+						<img src="${pageContext.request.contextPath}/images/BookLogo.jpg"/><br/>
 						<h6> Book ID: ${element.bid} </h6><br/>
 						<h6> Title: ${element.title} </h6><br/>
 						<h6> Category: ${element.category} </h6><br/>
 						<h6> Price: <f:formatNumber type="currency" >${element.price}</f:formatNumber></h6><br/>
 					</div>
 					<div class="product-form">												
-						<FORM action="Test" method="POST">
+						<FORM action="OnlineBookStore" method="POST">
 				      		<INPUT type="hidden" name="bid" value="${element.bid}"/>
 				      		<button action="submit" name="decrementQuantity" class="decrementQuantity" id="decrementQuantity" value="true">-</button>
 				      	</FORM>	
 				      	<h6>Quantity: ${element.quantity}</h6>					
-				      	<FORM action="Test" method="POST">
+				      	<FORM action="OnlineBookStore" method="POST">
 				      		<INPUT type="hidden" name="bid" value="${element.bid}"/>
 				      		<button action="submit" name="incrementQuantity" class="incrementQuantity" id="incrementQuantity" value="true">+</button>
 				      	</FORM>	
-						<FORM action="Test" method="POST">
+						<FORM action="OnlineBookStore" method="POST">
 				      		<INPUT type="hidden" name="bid" value="${element.bid}"/>
 				      		<button action="submit" name="removeFromCart" class="removeFromCart" id="removeFromCart" value="true">Remove From Cart</button>
 				      	</FORM>								
@@ -171,12 +188,12 @@
 		<hr></hr><br/>
 		<c:choose>
 			<c:when test="${isCartEmpty}">
-				<FORM action="Test" method="POST">
+				<FORM action="OnlineBookStore" method="POST">
 					<button action="Redirect.jspx" name="checkoutButton" id="checkoutButton" value="true" disabled="disabled">Proceed to Checkout</button>
 				</FORM>
 			</c:when>
 			<c:otherwise>
-				<FORM action="Test" method="POST">
+				<FORM action="OnlineBookStore" method="POST">
 					<button action="submit" name="checkoutButton" id="checkoutButton" value="true">Proceed to Checkout</button>
 				</FORM>
 			</c:otherwise>

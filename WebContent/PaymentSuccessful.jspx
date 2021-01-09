@@ -28,28 +28,28 @@
 	<div class="header">
 		<div class="inner-header">
 			<div class="logo-container">
-				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+				<a href="${pageContext.request.contextPath}/OnlineBookStore">Online Book Store</a>
 			</div>
 			<c:choose>
 				<c:when test="${isShowCounter}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${isLogged}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
@@ -59,7 +59,7 @@
 	<div class="container">
 		<p class="success">${msg}</p>
 		<p>Payment Successful!</p>	
-		<p class="continue"> <a href="${pageContext.request.contextPath}/Bookstore">Continue shopping here!</a></p>
+		<p class="continue"> <a href="${pageContext.request.contextPath}/OnlineBookStore">Continue shopping here!</a></p>
 	</div>
 	
 </body>

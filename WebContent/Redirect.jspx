@@ -16,13 +16,27 @@
 	<script type="text/javascript"
 	src="${pageContext.request.contextPath}/res/mc.js">;</script>
 <style>
-	button {
-			width:145px;
-    		height:30px;
-    		background-color: #eee;
-    		font-weight: bold;
-    		margin-bottom: 5px;	
-    		height: 30px;
+		.payment-login-or-create button {
+			border-radius: 3px;
+   			background-color: #4CAF50;
+    		color: white;
+    		border: white;
+    		display:block;
+    		padding: 15px;
+    		text-align: center;
+    		-webkit-transition-duration: 0.4s;
+    		transition-duration: 0.4s;
+    		margin: 16px auto !important;
+    		text-decoration: none;
+    		font-size: 14px;
+    		cursor: pointer;
+    		width: 200px;
+    		height: 50px;
+		}
+		
+		.payment-login-or-create button:hover {
+			background-color:green;
+    		color: white;
 		}
 		
 		.payment-login-or-create {
@@ -35,20 +49,12 @@
 		.payment-login-or-create p {
 			color: red;
 		}
+		
 		.loginButton,
 		.createButton {
 			display: inline-block;
+			margin-right: 20px;
 		}		
-		
-		.createButton {
-			margin-left: 50px;
-		}
-		
-		.loginButton button,
-		.createButton button{
-			width: 185px;
-			height: 35px;
-		}
 </style>
 <title>Redirect</title>
 </head>
@@ -56,28 +62,28 @@
 	<div class="header">
 		<div class="inner-header">
 			<div class="logo-container">
-				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+				<a href="${pageContext.request.contextPath}/OnlineBookStore">Online Book Store</a>
 			</div>
 			<c:choose>
 				<c:when test="${isShowCounter}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${isLogged}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
@@ -87,12 +93,12 @@
 	<div class="payment-login-or-create">
 			<p>Please Login or Create a new Account to proceed!</p><br/><br/>
 			<div class="loginButton">
-					<form action="Test" method="POST">
+					<form action="OnlineBookStore" method="POST">
 						<button action="submit" name="payment-login" id="payment-login" value="true">Login</button><br/><br/>
 					</form>
 			</div>
 			<div class="createButton">
-				<form action="Test" method="POST">
+				<form action="OnlineBookStore" method="POST">
 					<button action="submit" name="payment-register" id="payment-register" value="true">Create Account</button><br/><br/>
 				</form>
 			</div>

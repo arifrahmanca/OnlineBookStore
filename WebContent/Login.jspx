@@ -54,16 +54,30 @@
 			border: 1px solid black;
 			font-weight: bold;
 			height: 30px;
+			margin-left: 10px;
+			background: #4CAF50;
 		}
 		
 		.payment-login button {
-			width:145px;
-    		height:30px;
-    		background-color: #eee;
-    		font-weight: bold;
-    		margin-bottom: 5px;	
-    		height: 30px;
+			border-radius: 3px;
+   			background-color: #4CAF50;
+    		color: white;
+    		border: white;
+    		display:block;
+    		padding: 15px;
+    		text-align: center;
+    		-webkit-transition-duration: 0.4s;
+    		transition-duration: 0.4s;
+    		margin: 16px auto !important;
+    		text-decoration: none;
+    		font-size: 14px;
+    		cursor: pointer;
     		width: 255px;
+		}
+		
+		.payment-login button:hover {
+			background-color:green;
+    		color: white;
 		}
 		
 		.payment-login {
@@ -82,7 +96,8 @@
 		.payment-login fieldset {
 			width: 280px;
 			margin-left: 8px;
-			margin-bottom: 15px;
+			margin-bottom: 10px;
+			margin-top: 5px;
 		}
 		
 		.payment-login input {
@@ -105,28 +120,28 @@
 	<div class="header">
 		<div class="inner-header">
 			<div class="logo-container">
-				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+				<a href="${pageContext.request.contextPath}/OnlineBookStore">Online Book Store</a>
 			</div>
 			<c:choose>
 				<c:when test="${isShowCounter}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${isLogged}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
@@ -135,7 +150,7 @@
 	</div>	
 
 	 <div class="payment-login">
-			<form action="Test" method="POST" onsubmit="return validateLogin();">
+			<form action="OnlineBookStore" method="POST" onsubmit="return validateLogin();">
 				<fieldset>
 				<legend>Login</legend><br/>
 					<div class="loginArea">
@@ -144,9 +159,9 @@
 								<p class="login-failed">Login failed! You must provide correct credentials.</p>
 							</c:when>
 						</c:choose>
-						<label for="paymentUsername">Username:</label><br/>
+						<label for="paymentUsername"><small>*</small>Username:</label><br/>
 						<input class="login-input" type="text" name="paymentUsername" id="paymentUsername"></input><br/><br/>
-						<label for="paymentPassword">Password:</label><br/>
+						<label for="paymentPassword"><small>*</small>Password:</label><br/>
 						<input class="login-input" type="password" name="loginPassword" id="loginPassword"></input><br/>
 						<input  type="checkbox" onclick="showPassword()"></input>
 						<label style="vertical-align: 40%; margin-left: 5px;">Show Password</label><br/><br/>

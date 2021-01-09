@@ -43,7 +43,8 @@
   margin: 10px;
   text-align: center;
   line-height: 40px;
-  font-size: 25px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .flex-image {
@@ -92,7 +93,8 @@
     width: 170px;
 }
 
-.flex-item button:hover{
+.flex-item button:hover,
+.w3-button:hover {
 	background-color:green;
     color: white;
 }
@@ -112,11 +114,25 @@
 .w3-button {
 	margin-bottom: 20px;
 	height: 35px;
-	width: 150px;
+	width: 150px;	
+	border-radius: 3px;
+    background-color: #4CAF50;
+    color: white;
+    border: white;
+    display:block;
+    text-align: center;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    text-decoration: none;    
+    font-size: 16px;
+    cursor: pointer;
+    width: 180px;
+    height: 45px;   
 }
 
 .rateText, .bookForm {
 	display: inline;
+	font-weight: bold;
 }
 
 .bookForm {
@@ -128,11 +144,14 @@
 	margin-bottom: 50px;
 }
 
-.review {
-	font-weight: bold;
-	font-size: 18px;
+.all-review {
 	margin-left: 270px;
-	margin-bottom: 20px;
+	margin-bottom: 100px;
+}
+
+.customer-review {
+	font-size: 20px;
+	font-weight: bold;
 }
 
 </style>
@@ -141,28 +160,28 @@
 	<div class="header">
 		<div class="inner-header">
 			<div class="logo-container">
-				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+				<a href="${pageContext.request.contextPath}/OnlineBookStore">Online Book Store</a>
 			</div>
 			<c:choose>
 				<c:when test="${isShowCounter}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${isLogged}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
@@ -173,7 +192,7 @@
 	<div class="flex-container">
   		<div class="flex-image">
   			<img src="${pageContext.request.contextPath}/images/BookLogo.jpg" width="320"/><br/>
-  			<h6>Average Rating: ${avgRating}/5</h6>
+  			<h6>Average Rating: <f:formatNumber type="number" maxFractionDigits="1" value="${avgRating}"/>/5</h6>
   		</div>
   		<div class="flex-container-horizontal">
   			<div class="flex-title">${info.title}</div>
@@ -185,7 +204,6 @@
      			<INPUT type="hidden" name="bookBID" value="${info.bid}"/>
      			<BUTTON action="submit" name="addToCart" value="true">Add to cart</BUTTON>
 			</FORM>
-			<h6>Average Rating: ${avgRating}/5</h6>
   		</div>
 	</div>
 	
@@ -208,17 +226,15 @@
 			</form>
    		 </div> 
 	</div>
-	<div class="review">
-		<p class="review">Customer Reviews: </p>
-		<c:forEach items="${reviews}" var="element"> 
-			<div class="product-card">
-				<div class="product-info">
-					<h5>Name: ${element.firstname} ${element.lastname}</h5>
-					<h5>Rating: ${element.rating}</h5>
-					<h8>Review: ${element.review}</h8>
-				</div>
-			</div>
-		</c:forEach>
+	<div class="all-review">
+		<div class="review-container">
+			<p class="customer-review">Reviews from all customers: </p>
+			<c:forEach items="${reviews}" var="element"><br/>
+				<p>Name: ${element.firstname} ${element.lastname}</p>
+				<p>Rating: ${element.rating}</p>
+				<p>Review: ${element.review}</p>
+			</c:forEach>
+		</div>
 	</div>
 </body>
 </html>

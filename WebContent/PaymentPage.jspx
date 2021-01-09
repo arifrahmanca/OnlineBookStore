@@ -69,7 +69,7 @@
 			padding: 10px;
 			width: 355px;
 			margin-left: 470px; 
-			margin-top: 150px; 
+			margin-top: 100px; 
 			margin-bottom: 100px;
 			background-color: cornsilk;
 		}
@@ -91,12 +91,25 @@
 			margin-top: 10px;
 		}
 		.creditCard button {
-			width: 355px;
-    		height: 30px;
-    		background-color: #eee;
-    		font-weight: bold;
-    		margin-bottom: 5px;	
-    		height: 30px;
+			border-radius: 3px;
+   			background-color: #4CAF50;
+    		color: white;
+    		border: white;
+    		display:block;
+    		padding: 15px;
+    		text-align: center;
+    		-webkit-transition-duration: 0.4s;
+    		transition-duration: 0.4s;
+    		margin: 16px auto !important;
+    		text-decoration: none;
+    		font-size: 14px;
+    		cursor: pointer;
+    		width: 350px;
+		}
+		
+		.creditCard button:hover {
+			background-color:green;
+    		color: white;
 		}
 		
 		</STYLE>
@@ -106,28 +119,28 @@
 	<div class="header">
 		<div class="inner-header">
 			<div class="logo-container">
-				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+				<a href="${pageContext.request.contextPath}/OnlineBookStore">Online Book Store</a>
 			</div>
 			<c:choose>
 				<c:when test="${isShowCounter}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${isLogged}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>

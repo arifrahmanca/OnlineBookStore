@@ -106,15 +106,26 @@ function validateRegistration() {
 			margin-left: 400px;
 			margin-top: 150px;
 			margin-bottom: 100px;
-			width: 605px;
+			width: 575px;
 			display: grid;
 			grid-template-columns: [labels] auto [controls] 1fr [info] 1fr;
 			grid-auto-flow: row;
 			grid-gap: 0.8em;
 			background-color: cornsilk;;
-			padding: 0.5em;
+			padding: 1.5em;
 			align-content: center;
 		} 
+		
+		.payment-register legend {
+			font-size: 120%;
+			padding-left: 1em;
+			padding-right: 1em;
+			border: 1px solid black;
+			font-weight: bold;
+			height: 30px;
+			margin-left: 10px;
+			background: #4CAF50;
+		}
 		
 		.payment-register fieldset {
 			width: 575px;
@@ -171,12 +182,26 @@ function validateRegistration() {
 			margin-right: 120px;
 		}
 		.createAccountButton {
-			margin-left: 10px;
-			margin-top: 30px;
-			margin-bottom: 30px;
-			width: 550px;
-			height: 35px;
-		}
+			border-radius: 3px;
+   			background-color: #4CAF50;
+    		color: white;
+    		border: white;
+    		display:block;
+    		padding: 15px 30px;
+    		text-align: center;
+    		-webkit-transition-duration: 0.4s;
+    		transition-duration: 0.4s;
+    		margin: 16px auto !important;
+    		text-decoration: none;
+    		font-size: 16px;
+    		cursor: pointer;
+    		width: 550px;
+		}		
+		
+		.createAccountButton:hover {
+			background-color:green;
+    		color: white;
+		}	
 </STYLE>
 <title>Register</title>
 </head>
@@ -184,28 +209,28 @@ function validateRegistration() {
 	<div class="header">
 		<div class="inner-header">
 			<div class="logo-container">
-				<a href="${pageContext.request.contextPath}/Test">Online Book Store</a>
+				<a href="${pageContext.request.contextPath}/OnlineBookStore">Online Book Store</a>
 			</div>
 			<c:choose>
 				<c:when test="${isShowCounter}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart <span class="itemCounter">${itemCounter}</span></BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="cartButton" name="cartButton" value="true">Cart</BUTTON>
 					</FORM>
 				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${isLogged}">
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="logout" id="logout" value="true">Logout</BUTTON>
 					</FORM>
 				</c:when>
 				<c:otherwise>
-					<FORM action="Test" method="POST">
+					<FORM action="OnlineBookStore" method="POST">
 						<BUTTON class="login-logout" name="login" id="login" value="true">Login</BUTTON>
 					</FORM>
 				</c:otherwise>
@@ -213,7 +238,7 @@ function validateRegistration() {
 		</div>
 	</div>
 	 <div>
-			<form action="Login.jspx" class="payment-register" method="POST" onsubmit="return validateRegistration();">
+			<form action="OnlineBookStore" class="payment-register" method="POST" onsubmit="return validateRegistration();">
 				<fieldset>
 				<legend>Create Account</legend><br/>
 					<label for="username">Username<small>*</small></label><br/>
@@ -263,7 +288,7 @@ function validateRegistration() {
 					<p class="phone"><br/>
 						<label for="phone">Phone Number</label><br/>
 						<input type="text" name="registerPhone" id="registerPhone"></input>
-					</p>
+					</p><br/><br/><br/><br/><br/>
 					<button name="createAccountButton" id="createAccountButton" value="true" class="createAccountButton">Create Account</button><br/>
 				</fieldset>
 			</form>
