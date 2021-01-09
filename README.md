@@ -1,4 +1,4 @@
-# This is an e-commerce web project for a online book store
+# This is an e-commerce website for a online book store
 <h3>About the online book store:</h3>
 <ul><li>Any customer (user) can browse books, view book details, and rate/review the book</li>
   <li>Customer can login, logout, and register to the site</li>
