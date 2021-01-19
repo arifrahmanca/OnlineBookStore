@@ -7,6 +7,11 @@
 <h3>How to install:</h3>
 <ul><li>Download <b>OnlineBookStore.war</b> file and import it in eclipse IDE as war import</li>
   <li>Set the targeted runtime to <b>Apache Tomcat v*.*</b></li>
+  <li><b>Run</b> the program in a local server under Apache Tomcat</li>
+ </ul>
+<h3>Alternative Install</h3>
+<ul><li>Download <b>OnlineBookStore.war</b> file and import it in eclipse IDE as war import</li>
+  <li>Set the targeted runtime to <b>Apache Tomcat v*.*</b></li>
   <li>Set up database using the <b>SCHEMA</b> files</li>
   <li>Configure <b>context.xml</b> in the <b>META-INF</b> folder under <b>WebContent</b></li>
   <li><b>Run</b> the program in a local server under Apache Tomcat</li>
@@ -16,8 +21,8 @@ The project provides two rest services:
 <ul><li>Provides the detailed information for a book as a JSON file</li>
   <li>Return a list of all orders by book id in a JSON file</li>
 </ul>
- <h3>How to access <b>Rest Services:</b></h3>
-  For book info: http://localhost:8080/OnlineBookStore/rest/product/read?productId=bookID <br/>
-  For order: http://localhost:8080/OnlineBookStore/rest/order/getOrder?partNumber=bookID 
-<h2>Website Link:</h2>
+<h3>Website Link:</h3>
 <a href="http://onlinebookstore-env.eba-42xvspih.us-west-2.elasticbeanstalk.com/OnlineBookStore">OnlineBookStore</a>
+ <h3>How to access <b>Rest Services:</b></h3>
+  For book info: /OnlineBookStore/rest/product/read?productId=bookID <br/>
+  For order: /OnlineBookStore/rest/order/getOrder?partNumber=bookID 
