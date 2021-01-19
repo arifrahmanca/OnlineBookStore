@@ -19,3 +19,5 @@ The project provides two rest services:
  <h3>How to access <b>Rest Services:</b></h3>
   For book info: http://localhost:8080/OnlineBookStore/rest/product/read?productId=bookID <br/>
   For order: http://localhost:8080/OnlineBookStore/rest/order/getOrder?partNumber=bookID 
+<h2>Website Link:</h2>
+<a href="http://onlinebookstore-env.eba-42xvspih.us-west-2.elasticbeanstalk.com/OnlineBookStore">OnlineBookStore</a>
