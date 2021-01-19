@@ -9,13 +9,6 @@
   <li>Set the targeted runtime to <b>Apache Tomcat v*.*</b></li>
   <li><b>Run</b> the program in a local server under Apache Tomcat</li>
  </ul>
-<h3>Alternative Install</h3>
-<ul><li>Download <b>OnlineBookStore.war</b> file and import it in eclipse IDE as war import</li>
-  <li>Set the targeted runtime to <b>Apache Tomcat v*.*</b></li>
-  <li>Set up database using the <b>SCHEMA</b> files</li>
-  <li>Configure <b>context.xml</b> in the <b>META-INF</b> folder under <b>WebContent</b></li>
-  <li><b>Run</b> the program in a local server under Apache Tomcat</li>
- </ul>
 <h3>Rest Services:</h3>
 The project provides two rest services:
 <ul><li>Provides the detailed information for a book as a JSON file</li>
