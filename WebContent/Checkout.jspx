@@ -261,34 +261,34 @@
 		<form action="OnlineBookStore" method="POST" class="shippingForm" onsubmit="return validateShipping();">
 			<p class="fName">
 				<label for="firstname">First Name<small>*</small></label><br/>
-				<input type="text" name="shippingFirstName" id="shippingFirstName" value="${firstName}"></input><br/>
+				<input type="text" name="shippingFirstName" id="shippingFirstName" value="${account.address.firstName}"></input><br/>
 			</p>
 			<p class="lName">
 				<label for="lastname">Last Name<small>*</small></label><br/>
-				<input type="text" name="shippingLastName" id="shippingLastName" value="${lastName}"></input><br/>
+				<input type="text" name="shippingLastName" id="shippingLastName" value="${account.address.lastName}"></input><br/>
 			</p>
 			<p class="address"><br/>
 				<label for="username">Address (Street Number)<small>*</small></label><br/>
-				<input type="text" name="shippingAddress" id="shippingAddress" value="${address1}"></input><br/><br/>
+				<input type="text" name="shippingAddress" id="shippingAddress" value="${account.address.street}"></input><br/><br/>
 				<label for="username">Address Line 2</label><br/>
 				<input type="text" name="shippingAddress2" id="shippingAddress2" value="${address2}"></input><br/>
 			</p>
 			<p class="city"> <br/>
 				<label for="username">City<small>*</small></label><br/>
-				<input type="text" name="shippingCity" id="shippingCity" value="${city}"></input><br/>
+				<input type="text" name="shippingCity" id="shippingCity" value="${account.address.city}"></input><br/>
 			</p>
 			<p class="province">
 				<label for="username">Province<small>*</small></label><br/>
-				<input type="text" name="shippingProvince" id="shippingProvince" value="${province}"></input><br/>
+				<input type="text" name="shippingProvince" id="shippingProvince" value="${account.address.province}"></input><br/>
 			</p>
 			<p class="postalCode">
 				<label for="username">Postal Code<small>*</small></label><br/>
-				<input type="text" name="shippingPostalCode" id="shippingPostalCode" placeholder="XXX XXX" value="${postal}"></input><br/>
+				<input type="text" name="shippingPostalCode" id="shippingPostalCode" placeholder="XXX XXX" value="${account.address.zip}"></input><br/>
 			</p>
 			<p class="country"><br/>
 				<label for="country">Country<small>*</small></label><br/>
 				<select name="shippingCountry" id="shippingCountry">
-					<option selected="selected">Select Country</option>
+					<option selected="selected">${account.address.country}</option>
 					<option>Canada</option>
 					<option>USA</option>
 					<option>Mexico</option>
@@ -300,7 +300,7 @@
 			</p>
 			<p class="phone">
 				<label for="username">Phone Number</label><br/>
-				<input type="text" name="shippingPhone" id="shippingPhone" value="${number}"></input><br/>
+				<input type="text" name="shippingPhone" id="shippingPhone" value="${account.address.phone}"></input><br/>
 			</p>
 			<p style="font-weight: bold;"><br/>Billing Information:</p>
 			<input type="checkbox" name="hideBilling" id="hideBilling" onclick="hideBillingInfo()" value="true"><span class="hide">Same as Shipping Address</span></input><br/>

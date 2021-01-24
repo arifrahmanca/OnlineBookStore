@@ -154,6 +154,12 @@
 	font-weight: bold;
 }
 
+.failed-review {
+	font-weight: bold;
+	color: red;
+	font-size: 20px;
+}
+
 </style>
 </head>
 <body>
@@ -222,7 +228,12 @@
 				<p>Write a Review for this book:</p><br/>
 				<textarea name="bookComment" id="bookComment" rows="5" cols="69" placeholder="Enter your review here!" 
 						onclick="clearText();">Enter your review here!</textarea><br/><br/>
-				<input type="submit" name="addReview" value="Submit Review" class="w3-button w3-black"/><br/>						
+				<input type="submit" name="addReview" value="Submit Review" class="w3-button w3-black"/><br/>	
+				<c:choose>
+				<c:when test="${!isLogged}">
+					<p class="failed-review">You must login to review!</p><br/>
+				</c:when>
+			</c:choose>					
 			</form>
    		 </div> 
 	</div>

@@ -101,10 +101,21 @@ function validateRegistration() {
 	return ok;
 }
 </SCRIPT>
-<STYLE type="text/css">
-	.payment-register {
+<STYLE type="text/css">	
+		legend {
+			font-size: 120%;
+			padding-left: 1em;
+			padding-right: 1em;
+			border: 1px solid black;
+			font-weight: bold;
+			height: 30px;
+			margin-left: 10px;
+			background: #4CAF50;
+		}
+			
+		.sign-up {
 			margin-left: 400px;
-			margin-top: 150px;
+			margin-top: 50px;
 			margin-bottom: 100px;
 			width: 575px;
 			display: grid;
@@ -116,35 +127,42 @@ function validateRegistration() {
 			align-content: center;
 		} 
 		
-		.payment-register legend {
-			font-size: 120%;
-			padding-left: 1em;
-			padding-right: 1em;
-			border: 1px solid black;
-			font-weight: bold;
-			height: 30px;
-			margin-left: 10px;
-			background: #4CAF50;
-		}
-		
-		.payment-register fieldset {
+		.sign-up fieldset {
 			width: 575px;
 		}
 		
-		.payment-register input {
+		.sign-up input {
 			height: 25px;
 			margin-left: 10px;
+			margin-top: 5px;
 		}
 		
-		.payment-register select {
+		.sign-up select {
 			height: 28px;
 			margin-left: 10px;
 			width: 170px;
 			margin-top: 20px;
 		}
 		
-		.payment-register label {
+		.sign-up label {
 			margin-left: 10px;
+		}
+		
+		.password input,
+		.retype input,
+		.username input {
+			width: 162px;
+		}
+		
+		.password input {
+			margin-left: 12px;
+		}
+		
+		.address {
+			margin-top: 20px;
+			font-weight: bold;
+			margin-left: 10px;
+			font-size: 20px;
 		}
 		
 		.fName {
@@ -161,46 +179,82 @@ function validateRegistration() {
 			width: 250px;
 		}
 		
-		.address {
+		.street {
 			margin-top: 70px;
 		}
 		
-		.address input {
+		.street input {
 			width: 550px;
 		}
 		
 		.city, .province, .postalCode {
 			display: inline-block;
 		}	
-	
-		.country {
-			float: left;
+		
+		.province input,
+		.province label,
+		.postalCode input,
+		.postal code label {
+			margin-left: 17px;
+		}
+				
+		.phone input {
+			margin-top: 2px;
 		}
 		
-		.phone {
-			float: right;
-			margin-right: 120px;
+		.email input,
+		.email label {
+			margin-top: 25px;
 		}
+		
+		.email label {
+			margin-left: 29px;
+		}
+		
+		.email input {
+			margin-left: 10px;
+			width: 180px;
+		}
+		
+		.phone, .email,
+		.password, .retype {
+			display: inline;
+		}
+		
 		.createAccountButton {
 			border-radius: 3px;
    			background-color: #4CAF50;
     		color: white;
     		border: white;
     		display:block;
-    		padding: 15px 30px;
+    		padding: 15px;
     		text-align: center;
     		-webkit-transition-duration: 0.4s;
     		transition-duration: 0.4s;
     		margin: 16px auto !important;
     		text-decoration: none;
-    		font-size: 16px;
+    		font-size: 14px;
     		cursor: pointer;
     		width: 550px;
-		}		
+		}	
 		
-		.createAccountButton:hover {
+		.createAccountButton:hover{
 			background-color:green;
     		color: white;
+		}
+		
+		.failedSignup {
+			margin-left: 10px;
+			font-weight: bold;
+			color: red;
+			font-size: 20px;
+		}	
+		
+		.mismatched {
+			color: red;
+			font-weight: bold;
+			margin-left: 10px;
+			margin-top: 15px;'
 		}	
 </STYLE>
 <title>Register</title>
@@ -237,15 +291,35 @@ function validateRegistration() {
 			</c:choose>	
 		</div>
 	</div>
-	 <div>
-			<form action="OnlineBookStore" class="payment-register" method="POST" onsubmit="return validateRegistration();">
+	<div class="sign-up">
+		<form action="OnlineBookStore" method="POST" onsubmit="return validateRegistration();">
 				<fieldset>
 				<legend>Create Account</legend><br/>
-					<label for="username">Username<small>*</small></label><br/>
-					<input type="text" name="registerUsername" id="registerUsername"></input><br/><br/>
-					<label for="username">Password<small>*</small></label><br/>
-					<input type="password" name="registerPassword" id="registerPassword"></input><br/><br/>
-					<p style="font-weight: bold; margin-left: 10px;">Billing and Shipping Information:</p><br/>
+					<c:choose>
+						<c:when test="${isFailedSignup}">
+							<p class="failedSignup">Username already exists. Please select another username.</p><br/>
+						</c:when>
+					</c:choose>
+					<p class="username">
+						<label for="username">Username<small>*</small></label>
+						<input type="text" name="registerUsername" id="registerUsername"></input>
+					</p><br/><br/>
+					<p class="password">
+						<label for="password">Password<small>*</small></label>
+						<input type="password" name="registerPassword" id="registerPassword"></input>
+					</p>
+					<p class="retype">
+						<label for="retype-password">Re-type Password<small>*</small></label>
+						<input type="password" name="retype-password" id="retype-password"></input>
+					</p>
+					<c:choose>
+						<c:when test="${isPasswordMismatched}">
+							<p class="mismatched">*Password did not match</p>
+						</c:when>
+					</c:choose>
+					<p class="address">
+						Shipping Information:
+					</p><br/>
 					<p class="fName">
 						<label for="firstname">First Name<small>*</small></label><br/>
 						<input type="text" name="registerFirstName" id="registerFirstName"></input>
@@ -254,11 +328,11 @@ function validateRegistration() {
 						<label for="lastname">Last Name<small>*</small></label><br/>
 						<input type="text" name="registerLastName" id="registerLastName"></input>
 					</p>
-					<p class="address">
+					<p class="street">
 						<label for="streetNumber">Address (Street Number)<small>*</small></label><br/>
 						<input type="text" name="registerStreet" id="registerStreet"></input><br/><br/>
 						<label for="username">Address Line 2</label><br/>
-						<input type="text" name="registerAddress2" id="registerAddress2"></input>
+						<input type="text" name="registerStreet2" id="registerStreet2"></input>
 					</p>
 					<p class="city"><br/>
 						<label for="username">City<small>*</small></label><br/>
@@ -286,13 +360,17 @@ function validateRegistration() {
 						</select>
 					</p>
 					<p class="phone"><br/>
-						<label for="phone">Phone Number</label><br/>
+						<label for="phone">Phone Number</label>
 						<input type="text" name="registerPhone" id="registerPhone"></input>
-					</p><br/><br/><br/><br/><br/>
-					<button name="createAccountButton" id="createAccountButton" value="true" class="createAccountButton">Create Account</button><br/>
+					</p>
+					<p class="email">
+						<label for="email">E-mail<small>*</small></label>
+						<input type="text" name="email" id="email"></input>
+					</p><br/><br/>
+					<button name="createAccountButton" id="createAccountButton" value="true" class="createAccountButton">Create Account</button>
 				</fieldset>
 			</form>
-		</div>
+		</div>	
 </body>
 </html>
 </jsp:root>

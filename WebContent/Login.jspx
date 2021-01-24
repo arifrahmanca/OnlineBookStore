@@ -112,6 +112,19 @@
 		.login-input {
 			width: 255px;
 		}
+		
+		.login-failed {
+			font-weight: bold;
+			color: red;
+		}
+		
+		.sign-up a {
+			margin-left: 30px;
+			font-weight: bold;
+			font-size: 18px;
+			color: #ff0000;
+		}
+		
 	</STYLE>
 
 <title>Login</title>
@@ -156,16 +169,18 @@
 					<div class="loginArea">
 						<c:choose>
 							<c:when test="${isLoginFailed}">
-								<p class="login-failed">Login failed! You must provide correct credentials.</p>
+								<p class="login-failed">Login failed! <br/>
+								You must provide correct credentials.</p>
 							</c:when>
-						</c:choose>
+						</c:choose><br/>
 						<label for="paymentUsername"><small>*</small>Username:</label><br/>
 						<input class="login-input" type="text" name="paymentUsername" id="paymentUsername"></input><br/><br/>
 						<label for="paymentPassword"><small>*</small>Password:</label><br/>
 						<input class="login-input" type="password" name="loginPassword" id="loginPassword"></input><br/>
 						<input  type="checkbox" onclick="showPassword()"></input>
 						<label style="vertical-align: 40%; margin-left: 5px;">Show Password</label><br/><br/>
-						<button action="submit" name="login-button" id="login-button">Login</button><br/>
+						<button action="submit" name="login-button" id="login-button">Login</button>
+						<p>Do not have an account?<span class="sign-up"><a href="${pageContext.request.contextPath}/Register.jspx">Sign Up</a></span></p>
 					</div>
 				</fieldset>
 			</form>
