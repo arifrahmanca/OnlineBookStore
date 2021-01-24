@@ -1,66 +1,30 @@
 package bean;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class AccountBean {
-	private String username;
-	private String hashOfPass;
-	
+	private UserBean user;
+	private AddressBean address;
 
-
-	public AccountBean(String username, String hashPass) throws NoSuchAlgorithmException {
+	public AccountBean(UserBean user, AddressBean address) throws NoSuchAlgorithmException {
 		super();
-		this.username = username;
-		this.hashOfPass = hashPass;
-	}
-	
-	public AccountBean() {
-		
+		this.user = user;
+		this.address = address;
 	}
 
-	public String getUsername() {
-		return username;
+	public UserBean getUser() {
+		return user;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	public void setHashOfPass(String password) {
-		try {
-			this.hashOfPass = hashPassword(password);
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void setUser(UserBean user) {
+		this.user = user;
 	}
 
-	public String getHashOfPass() {
-		return hashOfPass;
+	public AddressBean getAddress() {
+		return address;
 	}
 
-	public String hashPassword(String pass) throws NoSuchAlgorithmException {
-		MessageDigest digest = MessageDigest.getInstance("SHA-512");
-		digest.reset();
-		byte[] hash = digest.digest(pass.getBytes());
-		
-		BigInteger no = new BigInteger(1, hash);
-		String hashtext = no.toString(16); 
-		
-		while (hashtext.length() < 32) { 
-            hashtext = "0" + hashtext; 
-        } 
-		
-		return hashtext;
-	}
-	
-	public static void main(String[] args) throws NoSuchAlgorithmException {
-		AccountBean acc= new AccountBean();
-		String hash = acc.hashPassword("test1");
-		acc = new AccountBean("Arif", hash);
-		
-		System.out.println(acc.getHashOfPass());
+	public void setAddress(AddressBean address) {
+		this.address = address;
 	}
 }

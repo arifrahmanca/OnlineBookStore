@@ -13,7 +13,7 @@ public class AddressBean {
 	private String phone;
 	
 	public AddressBean (int id, String firstName, String lastName, String street, String city, 
-			String province, String country, String zip, String phone) {
+			String province, String zip, String country, String phone) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;

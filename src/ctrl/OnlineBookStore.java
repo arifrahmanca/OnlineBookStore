@@ -16,10 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.AccountBean;
 import bean.AddressBean;
 import bean.BookBean;
 import bean.BookInfoBean;
 import bean.BookReviewBean;
+import bean.UserBean;
 import bean.cartItemBean;
 import model.BOOKSTORE;
 
@@ -41,6 +43,9 @@ public class OnlineBookStore extends HttpServlet {
 	private String checkoutButton;
 	boolean isLoginSuccess = false;
 	boolean isLogged = false;
+	boolean isLoginFailed = true;
+	boolean isFailedSignup = false;
+	boolean isPasswordMismatched = false;
 	
 	public OnlineBookStore() {
 		super();
@@ -78,10 +83,14 @@ public class OnlineBookStore extends HttpServlet {
 		String paymentRegister = request.getParameter("payment-register");
 		String createAccountButton = request.getParameter("createAccountButton");
 		String viewItem = request.getParameter("viewItem");
+		String username = request.getParameter("paymentUsername");
+		String password = request.getParameter("loginPassword");
+		String addReview = request.getParameter("addReview");
 		boolean isRedirected = false;
 		
 		if (logout != null) {
 			isLogged = false;
+			isLoginFailed = true;
 		}
 		
 		String category = request.getParameter("category");
@@ -132,6 +141,7 @@ public class OnlineBookStore extends HttpServlet {
 			session.setAttribute("isLogged", isLogged); 
 			request.getRequestDispatcher("/Login.jspx").forward(request, response);
 		} else if(cartButton != null || removeFromCart != null || incrementQuantity != null || decrementQuantity != null) {
+			session.setAttribute("itemCounter", itemCounter);
 			request.getRequestDispatcher("/Cart.jspx").forward(request, response);
 		} else if (confirmOrder != null) {
 			request.getRequestDispatcher("/PaymentSuccessful.jspx").forward(request, response);
@@ -140,29 +150,78 @@ public class OnlineBookStore extends HttpServlet {
 			request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
 		} else if (paymentRegister != null) {
 			request.getRequestDispatcher("/Register.jspx").forward(request, response);
-		} else if (createAccountButton != null || paymentLogin != null) {
+		} else if (paymentLogin != null) {
 			request.getRequestDispatcher("/Login.jspx").forward(request, response);
+		} else if (createAccountButton != null) {
+			try {
+				createAccount(request);
+			} catch (SQLException e) {
+				e.printStackTrace(); 
+			}
+			request.setAttribute("isFailedSignup", isFailedSignup);
+			request.setAttribute("isPasswordMismatched", isPasswordMismatched);
+			
+			if (isFailedSignup || isPasswordMismatched) { 
+				request.getRequestDispatcher("/Register.jspx").forward(request, response);
+			} else {
+				request.getRequestDispatcher("/Login.jspx").forward(request, response);
+			}
 		} else if (viewItem != null) {
 			String bookID = viewItem;
 			setBookInfo(bookID, session); 
 			request.getRequestDispatcher("/ProductPage.jspx").forward(request, response);
-		} else if (checkoutButton != null) {
+		} else if (checkoutButton != null) { 
 			isRedirected = true;
-			session.setAttribute("isRedirected", isRedirected); 
+			session.setAttribute("isRedirected", isRedirected);
+			AccountBean account = null;
+			 
 			if (isLogged) {
+				try {
+					account = model.retrieveAccount(username);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.getStackTrace();
+				}
+				session.setAttribute("account", account);
 				request.getRequestDispatcher("/Checkout.jspx").forward(request, response);
 			} else {
 				request.getRequestDispatcher("/Redirect.jspx").forward(request, response);
 			}  
 		} else if (loginButton != null) {
-			isLogged = true;
+			validateLogin(username, password);
 			isRedirected = (boolean) session.getAttribute("isRedirected");
-			session.setAttribute("isLogged", isLogged); 
-			if (isRedirected) {
-				request.getRequestDispatcher("/Checkout.jspx").forward(request, response);
+			session.setAttribute("isLogged", isLogged);
+			session.setAttribute("isLoginFailed", isLoginFailed);
+			
+			AccountBean account = null;
+			if (isLogged) {
+				try {
+					account = model.retrieveAccount(username);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.getStackTrace();
+				}
+				session.setAttribute("account", account);
+				
+				if (isRedirected) {
+					request.getRequestDispatcher("/Checkout.jspx").forward(request, response);
+				} else {
+					request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
+				} 
 			} else {
-				request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
-			} 
+				request.getRequestDispatcher("/Login.jspx").forward(request, response);
+			}
+			
+		} else if (addReview != null) {
+			if(isLogged) {
+				try {
+					insertReview(request);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			} 			
+			request.getRequestDispatcher("/ProductPage.jspx").forward(request, response);
+			
 		} else {
 			request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
 		}		
@@ -240,7 +299,7 @@ public class OnlineBookStore extends HttpServlet {
 				}
 			}
 
-			if (!found) {
+			if (!found) { 
 				cartItemBean item = new cartItemBean(book.getBid(), book.getTitle(), book.getPrice(),
 						book.getCategory(), 1);
 				books.add(item);
@@ -396,4 +455,89 @@ public class OnlineBookStore extends HttpServlet {
 		session.setAttribute("shipping", shipping);
 		session.setAttribute("billing", billing);
 	}
+	
+	private List<UserBean> getUsers(){
+		List<UserBean> users = new ArrayList<UserBean>();
+		try {
+			users = model.retrieveAllUsers();
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+		}
+		return users;
+	}
+	
+	private void validateLogin(String username, String password) {
+		if (isValidLogin(username, password)) {
+			isLoginFailed = false;
+			isLogged = true;
+		} else {
+			isLoginFailed = true;
+			isLogged = false;
+		}
+	}
+	
+	private boolean isValidLogin(String username, String password) {
+		List<UserBean> users = getUsers();
+		for (UserBean user : users) {
+			if (user.getUsername().equals(username)) {
+				if (user.getPassword().equals(password)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean isUserExist(String username) {
+		List<UserBean> users = getUsers();
+		for (UserBean user : users) {
+			if (user.getUsername().equals(username)) {
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	private void createAccount(HttpServletRequest request) throws SQLException {
+		String registerUsername = request.getParameter("registerUsername");
+		String registerPassword = request.getParameter("registerPassword");
+		String retypePassword = request.getParameter("retype-password");
+		String firstName = request.getParameter("registerFirstName");
+		String lastName = request.getParameter("registerLastName");
+		String street1 = request.getParameter("registerStreet");
+		String street2 = request.getParameter("registerStreet2");
+		String street = street1 + "\n" + street2;
+		String city = request.getParameter("registerCity");
+		String province = request.getParameter("registerProvince");
+		String zip = request.getParameter("registerPostalCode");
+		String country = request.getParameter("registerCountry"); 
+		String phone = request.getParameter("registerPhone");
+		String email = request.getParameter("email");
+		 
+		if (isUserExist(registerUsername)) {
+			isFailedSignup = true;
+			isPasswordMismatched = false;
+		} else if (!registerPassword.equals(retypePassword)) {
+			isPasswordMismatched = true;
+			isFailedSignup = false;
+		} else {
+			isFailedSignup = false;
+			isPasswordMismatched = false; 
+			model.insertUser(registerUsername, registerPassword, email);
+			model.insertAddress(firstName, lastName, street, city, province, zip, country, phone);
+		}
+	}
+	
+	public void insertReview(HttpServletRequest request) throws SQLException{
+		String review = request.getParameter("bookComment");
+		int rating = Integer.parseInt(request.getParameter("rating"));
+		
+		AccountBean account = (AccountBean) request.getSession().getAttribute("account");
+		String firstname = account.getAddress().getFirstName();
+		String lastname = account.getAddress().getLastName();
+		
+		model.insertReview(bid, review, rating, firstname, lastname);
+		setBookInfo(bid, request.getSession());
+	}
+
 }

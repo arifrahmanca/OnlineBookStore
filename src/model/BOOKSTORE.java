@@ -15,11 +15,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import bean.AccountBean;
-import bean.AccountCreatedBean;
+import bean.AddressBean;
 import bean.BookBean;
 import bean.BookInfoBean;
 import bean.BookReviewBean;
 import bean.OrderItemBean;
+import bean.UserBean;
 import bean.cartItemBean;
 import dao.BookDAO;
 import dao.OrderDAO;
@@ -65,6 +66,10 @@ public class BOOKSTORE {
 		
 	}
 	
+	public List<UserBean> retrieveAllUsers() throws SQLException{
+		return user.retrieveAllUsers();
+	}
+	
 	public Map<String, BookBean> retriveAllBooks() throws Exception{
 		return book.retrieveAllBooks();
 	}
@@ -98,21 +103,21 @@ public class BOOKSTORE {
 		return book.retrieveBookInfoByBid(bid);
 	}
 	
-	public AccountBean retrieveAccountForValidation(String Username) throws NoSuchAlgorithmException, SQLException {
-		if(Username == null) {
-			return null;
-		}else {
-			return user.retrieveUser(Username);
-		}
-	}
-	
-	public AccountCreatedBean retrieveUserInfo(String Username) throws NoSuchAlgorithmException, SQLException {
-		if(Username == null) {
-			return null;
-		}else {
-			return user.retrieveUserInfo(Username);
-		}
-	}
+//	public AccountBean retrieveAccountForValidation(String Username) throws NoSuchAlgorithmException, SQLException {
+//		if(Username == null) {
+//			return null;
+//		}else {
+//			return user.retrieveUser(Username);
+//		}
+//	}
+//	
+//	public AccountCreatedBean retrieveUserInfo(String Username) throws NoSuchAlgorithmException, SQLException {
+//		if(Username == null) {
+//			return null;
+//		}else {
+//			return user.retrieveUserInfo(Username);
+//		}
+//	}
 	
 	
 	public double getSubtotal(List<cartItemBean> books) {
@@ -132,23 +137,14 @@ public class BOOKSTORE {
 		return subtotal + shipping + tax;
 	}	
 	
-	public String insertUser(String username, String hash) {
-		String userID = username;
-		
-		if(validateUsername(userID)) {
-			int result;
-			try {
-				result = user.insertUser(userID, hash);
-				return String.valueOf(result);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				return "0 : (entry with same userID already exists!)" + e;
-			}
-		}else {
-			return "0 : (Invalid Inputs)";
-		}
+	public int insertUser(String username, String password, String email) throws SQLException {
+		return user.insertUser(username, password, email);
 	}
 	
+	public int insertAddress(String firstName, String lastName, String street, String city,
+			String province, String zip, String country, String phone) throws SQLException {
+		return user.insertAddress(firstName, lastName, street, city, province, zip, country, phone);
+	}
 
 	public String deleteUser(String username) {
 		String userID = username;
@@ -375,28 +371,16 @@ public class BOOKSTORE {
 		
 	}
 	
+	public AccountBean retrieveAccount(String username) throws NoSuchAlgorithmException, SQLException {
+		return user.retrieveAccount(username);
+	}
+	
 	public List<BookReviewBean> retrieveBookReviewsByBID(String bid) throws SQLException {
 		return book.retrieveReviewsByBID(bid);
 	}
 
-	public int insertReview(String bookID, String firstname, String lastname, String rating, String review) {
-		int r;
-		try {
-			r = Integer.parseInt(rating);
-		}catch(Exception e) {
-			r = -1;
-		}
-		if(validateReview(review) && validateRating(r)) {
-			try {
-				return book.insertReview(bookID, firstname, lastname, r, review);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return 0;
-			}
-		}else {
-			return 0;
-		}
+	public int insertReview(String bid, String review, int rating, String firstname, String lastname) throws SQLException {
+		return book.insertReview(bid, review, rating, firstname, lastname);
 	}
 	
 	public boolean validateReview(String review) {
@@ -406,8 +390,4 @@ public class BOOKSTORE {
 	public boolean validateRating(int r) {
 		return (( r <= 5) && (r >= 0));
 	}
-	
-//	public static void main(String[] args) throws NoSuchAlgorithmException {
-////		System.out.println(validateNumber("2"));
-//	}
 }
