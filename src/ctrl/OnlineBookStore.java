@@ -2,6 +2,7 @@ package ctrl;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +47,8 @@ public class OnlineBookStore extends HttpServlet {
 	boolean isLoginFailed = true;
 	boolean isFailedSignup = false;
 	boolean isPasswordMismatched = false;
+	boolean isInvalidCC = false;
+	String errorMgsCC = "";
 	
 	public OnlineBookStore() {
 		super();
@@ -87,6 +90,7 @@ public class OnlineBookStore extends HttpServlet {
 		String password = request.getParameter("loginPassword");
 		String addReview = request.getParameter("addReview");
 		boolean isRedirected = false;
+		String paymentButton = request.getParameter("paymentButton");
 		
 		if (logout != null) {
 			isLogged = false;
@@ -99,7 +103,7 @@ public class OnlineBookStore extends HttpServlet {
 		request.setAttribute("category", category);
 		
 		// Set homepage with all books
-		setBooks(session);
+		setBooks(session); 
 		
 		// Adding book to the cart
 		if (request.getParameter("addToCart") != null) {// when user presses add to cart button
@@ -221,6 +225,14 @@ public class OnlineBookStore extends HttpServlet {
 				}
 			} 			
 			request.getRequestDispatcher("/ProductPage.jspx").forward(request, response);
+			
+		} else if(paymentButton != null) {
+			validateCC(request);
+			if (isInvalidCC) {
+				request.getRequestDispatcher("/PaymentPage.jspx").forward(request, response);
+			} else {
+				request.getRequestDispatcher("/ConfirmOrder.jspx").forward(request, response);
+			}
 			
 		} else {
 			request.getRequestDispatcher("/MainPage.jspx").forward(request, response);
@@ -423,7 +435,6 @@ public class OnlineBookStore extends HttpServlet {
 		String shippingFirstName = request.getParameter("shippingFirstName");
 		String shippingLastName = request.getParameter("shippingLastName");
 		String shippingAddress = request.getParameter("shippingAddress");
-		String shippingAddress2 = request.getParameter("shippingAddress2");
 		String shippingCity = request.getParameter("shippingCity");
 		String shippingProvince = request.getParameter("shippingProvince");
 		String shippingPostalCode = request.getParameter("shippingPostalCode");
@@ -437,7 +448,6 @@ public class OnlineBookStore extends HttpServlet {
 		String billingFirstname = request.getParameter("billingFirstname");
 		String billingLastname = request.getParameter("billingLastname");
 		String billingAddress = request.getParameter("billingAddress"); 
-		String billingAddress2 = request.getParameter("billingAddress2");
 		String billingCity = request.getParameter("billingCity");
 		String billingProvince = request.getParameter("billingProvince");
 		String billingPostalCode = request.getParameter("billingPostalCode");
@@ -504,9 +514,7 @@ public class OnlineBookStore extends HttpServlet {
 		String retypePassword = request.getParameter("retype-password");
 		String firstName = request.getParameter("registerFirstName");
 		String lastName = request.getParameter("registerLastName");
-		String street1 = request.getParameter("registerStreet");
-		String street2 = request.getParameter("registerStreet2");
-		String street = street1 + "\n" + street2;
+		String street = request.getParameter("registerStreet");		
 		String city = request.getParameter("registerCity");
 		String province = request.getParameter("registerProvince");
 		String zip = request.getParameter("registerPostalCode");
@@ -528,7 +536,7 @@ public class OnlineBookStore extends HttpServlet {
 		}
 	}
 	
-	public void insertReview(HttpServletRequest request) throws SQLException{
+	private void insertReview(HttpServletRequest request) throws SQLException{
 		String review = request.getParameter("bookComment");
 		int rating = Integer.parseInt(request.getParameter("rating"));
 		
@@ -538,6 +546,52 @@ public class OnlineBookStore extends HttpServlet {
 		
 		model.insertReview(bid, review, rating, firstname, lastname);
 		setBookInfo(bid, request.getSession());
+	}
+	
+	private void setErrorMgsCC(String msg) {
+		this.errorMgsCC = msg;
+	}
+	
+	private boolean isAllDigits(String s) {
+		for (int i = 0; i < s.length(); i++) {
+			if(!Character.isDigit(s.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private void validateCC(HttpServletRequest request) {
+		LocalDate date = java.time.LocalDate.now();
+		int y = date.getYear(); 
+		int m = date.getMonthValue();
+		
+		int year = Integer.parseInt(request.getParameter("year"));
+		int month = Integer.parseInt(request.getParameter("month"));
+		
+		String cardNumber = request.getParameter("cardNumber");
+		boolean isValidCard = isAllDigits(cardNumber);
+		
+		String cvv = request.getParameter("cvv");
+		boolean isValidCVV = isAllDigits(cvv); 
+		
+		if (!isValidCard || cardNumber.length() < 16) {
+			isInvalidCC = true;
+			setErrorMgsCC("Credit Card Error! Please enter valid Card number");
+		} else if (year < y) {
+			isInvalidCC = true;
+			setErrorMgsCC("Credit Card Error! Please select valid Year.");
+		} else if (year >= y && month < m) {
+			isInvalidCC = true;
+			setErrorMgsCC("Credit Card Error! Please select valid Month.");
+		} else if (!isValidCVV) {
+			isInvalidCC = true;
+			setErrorMgsCC("Credit Card Error! Please enter valid CVV.");
+		} else {
+			isInvalidCC = false;
+		}
+		request.getSession().setAttribute("isInvalidCC", isInvalidCC);
+		request.getSession().setAttribute("errorMgsCC", errorMgsCC);
 	}
 
 }
