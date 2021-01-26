@@ -331,8 +331,6 @@ function validateRegistration() {
 					<p class="street">
 						<label for="streetNumber">Address (Street Number)<small>*</small></label><br/>
 						<input type="text" name="registerStreet" id="registerStreet"></input><br/><br/>
-						<label for="username">Address Line 2</label><br/>
-						<input type="text" name="registerStreet2" id="registerStreet2"></input>
 					</p>
 					<p class="city"><br/>
 						<label for="username">City<small>*</small></label><br/>

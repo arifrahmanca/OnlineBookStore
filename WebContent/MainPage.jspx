@@ -58,8 +58,8 @@
 				  	<input type="submit" name="category" value="Fiction"></input>
 				  	<input type="submit" name="category" value="Science"></input>
 			  	</div>
+			  	<p>Current Category: ${category}</p>
 			</div>
-			<h5>Current Category: ${category}</h5>
 		</div>
 	</FORM>
 	
@@ -74,18 +74,14 @@
 			      		<p>Title: ${element.title}</p>
 			      		<p>Category: ${element.category}</p>
 			      		<p><f:formatNumber type="currency" >${element.price}</f:formatNumber></p>
-			      	</div>	
-			      	
-			      	
-			      		<FORM action="OnlineBookStore" method="POST" class="viewItem">
-			      			<BUTTON action="submit" name="viewItem" value="${element.bid}">View Details</BUTTON>
-			     	 	</FORM>
-			      	 
-			      		  	
+			      	</div>		      		  	
 			        <FORM action="OnlineBookStore" method="POST" class="addToCart">
 			      		<INPUT type="hidden" name="bookBID" value="${element.bid}"/>
 			      		<BUTTON action="submit" name="addToCart" value="true">Add to cart</BUTTON>
-			       </FORM>			      
+			       </FORM>	
+			       <FORM action="OnlineBookStore" method="POST" class="viewItem">
+			      		<BUTTON action="submit" name="viewItem" value="${element.bid}">View Details</BUTTON>
+			       </FORM>		      
 			    </div>
 			</div>
 		</c:forEach>

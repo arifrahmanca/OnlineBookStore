@@ -39,7 +39,7 @@
 		
 		.billing {
 			float: right;
-			margin-right: 180px;
+			margin-right: 50px;
 		}
 		
 		.confirmOrder {

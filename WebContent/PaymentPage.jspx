@@ -104,12 +104,17 @@
     		text-decoration: none;
     		font-size: 14px;
     		cursor: pointer;
-    		width: 350px;
+    		width: 355px;
 		}
 		
 		.creditCard button:hover {
 			background-color:green;
     		color: white;
+		}
+		
+		.errorCC {
+			font-weight: bold;
+			color: red;
 		}
 		
 		</STYLE>
@@ -149,11 +154,11 @@
 	</div>
 	<div class="creditCard">
 			<p style="font-weight: bold; font-size: 120%;">Credit Card Information:</p><br/>
-			<form action="ConfirmOrder.jspx" method="POST" onsubmit="return validateCC();">
+			<form action="OnlineBookStore" method="POST" onsubmit="return validateCC();">
 				<label for="nameOnCard">Name on Card<small>*</small></label><br/>
 				<input type="text" name="nameOnCard" id="nameOnCard" placeholder="Name on Card"></input><br/><br/>
 				<label for="cardNumber">Card Number<small>*</small></label><br/>
-				<input type="text" name="cardNumber" id="cardNumber" placeholder="XXXXXXXXXXXXXXXX"></input><br/><br/>
+				<input type="text" name="cardNumber" id="cardNumber" maxlength="16" placeholder="XXXXXXXXXXXXXXXX"></input><br/><br/>
 				<label for="expiry-date">Expiry Date<small>*</small>
 				<span style="display: inline; margin-left: 200px;">CVV<small>*</small></span></label><br/>
 					<select name="month" id="month">
@@ -182,7 +187,13 @@
 						<option>2026</option>
 						<option>2027</option>
 					</select>
-					<input style="width: 65px; height: 25px; margin-left: 65px;" type="text" placeholder="XXXX" id="cvv"></input><br/><br/>
+					<input style="width: 65px; height: 25px; margin-left: 60px;" type="text" name="cvv" id="cvv"
+							maxlength="3" placeholder="XXX"></input><br/><br/>
+					<c:choose>
+						<c:when test="${isInvalidCC}">
+							<p class="errorCC">${errorMgsCC}</p>
+						</c:when>
+					</c:choose>
 					<button action="submit" name="paymentButton" id="paymentButton">Continue to proceed</button>
 				</form>
 			</div>	

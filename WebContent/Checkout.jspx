@@ -270,8 +270,6 @@
 			<p class="address"><br/>
 				<label for="username">Address (Street Number)<small>*</small></label><br/>
 				<input type="text" name="shippingAddress" id="shippingAddress" value="${account.address.street}"></input><br/><br/>
-				<label for="username">Address Line 2</label><br/>
-				<input type="text" name="shippingAddress2" id="shippingAddress2" value="${address2}"></input><br/>
 			</p>
 			<p class="city"> <br/>
 				<label for="username">City<small>*</small></label><br/>
@@ -316,8 +314,6 @@
 			<p class="address"><br/>
 				<label for="username">Address (Street Number)<small>*</small></label><br/>
 				<input type="text" name="billingAddress" id="billingAddress" value="${address1}"></input><br/><br/>
-				<label for="username">Address Line 2</label><br/>
-				<input type="text" name="billingAddress2" id="billingAddress2" value="${address2}"></input><br/>
 			</p>
 			<p class="city"> <br/>
 				<label for="username">City<small>*</small></label><br/>

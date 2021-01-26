@@ -18,8 +18,13 @@
 			margin-top: 150px;
 			margin-left: 500px;
 			color: Red;
-			font-size: 20px;
+			font-size: 25px;
 			font-weight: bold;
+			align-items: center;
+		}
+		
+		.container p {
+			justify-content: center;
 		}
 	</style>
 
