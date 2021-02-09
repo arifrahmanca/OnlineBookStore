@@ -17,5 +17,5 @@ The project provides two rest services:
 <h3>Website Link:</h3>
 <a href="http://onlinebookstore-env.eba-42xvspih.us-west-2.elasticbeanstalk.com/OnlineBookStore">OnlineBookStore</a>
  <h3>How to access <b>Rest Services:</b></h3>
-  For book info: http://onlinebookstore-env.eba-42xvspih.us-west-2.elasticbeanstalk.com/rest/product/read?productId=bookID <br/>
+  For book info: http://onlinebookstore-env.eba-42xvspih.us-west-2.elasticbeanstalk.com/rest/product/read?productId=bookID (e.g. bookID = b001) <br/>
   For order: http://onlinebookstore-env.eba-42xvspih.us-west-2.elasticbeanstalk.com/rest/order/getOrder?partNumber=bookID 
